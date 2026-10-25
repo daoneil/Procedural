@@ -1,6 +1,6 @@
-# IsoDungeon Generator #
+# IsoDungeon Forge #
 
-IsoDungeon Generator is a web app collaboratively developed with Claude.ai. 
+IsoDungeon Forge is a web app collaboratively developed with Claude.ai. 
 Select from three types of dungeons. Click the "Roll a New Seed" button to generate a new dungeon. 
 Revise text in the Dungeon Name text field. Click Copy SVG button to put the code on the clipboard to past into a text editor.
 

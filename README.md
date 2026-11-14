@@ -1,10 +1,6 @@
-# IsoDungeon Forge #
+# Isometric Subterranean Cartographer #
 
-IsoDungeon Forge is a web app collaboratively developed with Claude.ai. 
-Select from three types of dungeons. Click the "Roll a New Seed" button to generate a new dungeon. 
-Revise text in the Dungeon Name text field. Click Copy SVG button to put the code on the clipboard to past into a text editor.
+Computer-drawn isometric maps of places under the earth, three to five levels deep, built from a random graph with loops. Six kinds: crypt, mine, temple, undercity, oubliette and sea cave. A variety of passages, stairs, bridges, chutes, and ladders connect the levels as a branching tree; one to three loop ways close loops as alternative routes, shortcuts, dangerous paths or one-way drops, built from stairs, switchbacks, lifts, chutes, crawlways and secret stairs to suit the dungeon. Pick a type, set the levels and loops, roll a seed value for the random graph generator, and copy out the SVG or the graph as JSON. Pause the cursor over the Copy SVG button for instruction. A Graph JSON editor enables you to customize the generated map.
 
-- [IsoDungeon Generator](https://daoneil.github.io/Procedural/isodungeon-forge.html)
-- [The Tomb of the Sleeping Prince](https://daoneil.github.io/Procedural/20261024_Tomb_of_the_Sleeping_Prince.svg )
-- [The Echoing Galleries of Kardun](https://daoneil.github.io/Procedural/20261024_Echoing_Galleries_of_Kardun.svg)
-- [The Lost Fane of Azthphos](https://daoneil.github.io/Procedural/20261024_Lost_Fane_of_Azthphos.svg)
+- [Isometric Subterranean Cartographer](https://daoneil.github.io/Procedural/Isometric_Subterranean_Cartographer.html)
+

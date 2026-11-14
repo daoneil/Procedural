@@ -4,3 +4,6 @@ Computer-drawn isometric maps of places under the earth, three to five levels de
 
 - [Isometric Subterranean Cartographer](https://daoneil.github.io/Procedural/Isometric_Subterranean_Cartographer.html)
 
+## Example maps ##
+[The Cisterns of the Buried Leper Prince](https://daoneil.github.io/Procedural/20261114_Cisterns_of_the_buried_leper_prince.svg)
+[The Crimsom Inlet of Mistbarrow ](https://daoneil.github.io/Procedural/20261114_Crimsom_Inlet_of_Mistbarrow.svg)

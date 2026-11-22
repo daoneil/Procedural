@@ -72,6 +72,17 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .status { font-size: 13px; color: var(--ink-dim); font-variant-numeric: tabular-nums; min-height: 1.5em; }
 .sheet { overflow: auto; border: 1px solid var(--line); border-radius: 4px; background: #efe2c4; box-shadow: 0 18px 40px rgba(0,0,0,0.45); max-height: 82vh; }
 .sheet svg { display: block; width: calc(100% * var(--zoom, 1)); height: auto; max-width: none; }
+.sheet[hidden] { display: none; }
+fieldset.radios { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+fieldset.radios legend { padding: 0; margin-bottom: 4px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+fieldset.radios label { display: flex; align-items: center; gap: 7px; font-size: 14.5px; text-transform: none; letter-spacing: normal; color: var(--ink-light); cursor: pointer; white-space: nowrap; }
+fieldset.radios input { accent-color: var(--brass); width: 16px; height: 16px; margin: 0; }
+.maptabs { display: flex; gap: 4px; margin-bottom: -1px; padding-left: 10px; position: relative; z-index: 1; }
+.maptabs[hidden] { display: none; }
+.maptabs button { border: 1px solid var(--line); border-bottom-color: transparent; border-radius: 4px 4px 0 0; background: var(--rail); color: var(--ink-dim); padding: 7px 18px; font-size: 14px; }
+.maptabs button[aria-selected="true"] { background: #efe2c4; color: #3b2a1c; border-color: var(--line); border-bottom-color: #efe2c4; font-weight: 600; }
+.maptabs button:hover { color: var(--ink-light); }
+.maptabs button[aria-selected="true"]:hover { color: #3b2a1c; }
 .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px 28px; color: var(--ink-dim); font-size: 14px; }
 .notes h2 { font-family: var(--display); font-weight: 400; font-size: 17px; letter-spacing: 0.06em; color: var(--brass); margin: 0 0 4px; }
 .notes p { margin: 0; min-width: 0; }
@@ -113,10 +124,41 @@ code { font-size: 0.92em; }
 .license a { color: var(--brass); }
 .history p { margin: 0 0 8px; }
 .graph { align-items: start; }
-.jmore { grid-column: 1 / -1; }
-.jcols { column-count: 2; column-gap: 32px; font-size: 13.5px; color: var(--ink-dim); }
-.jcols .jsec { break-inside: avoid-column; }
-@media (max-width: 900px) { .jcols { column-count: 1; } }
+.gcol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.gcol > .card { min-width: 0; }
+.jfold { position: relative; overflow: hidden; transition: max-height 0.35s ease; }
+.jfold.clipped::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 64px; background: linear-gradient(rgba(0,0,0,0), var(--rail)); pointer-events: none; }
+.readmore { display: inline-block; margin-top: 8px; color: var(--brass); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.readmore:hover, .readmore:focus-visible { color: var(--ink-light); }
+@media (prefers-reduced-motion: reduce) { .jfold { transition: none; } }
+.mx-wrap { overflow: auto; max-height: 70vh; border: 1px solid var(--line); border-radius: 3px; background: var(--desk); }
+table.mx { border-collapse: separate; border-spacing: 0; font-size: 12px; font-variant-numeric: tabular-nums; }
+table.mx th, table.mx td { padding: 0; text-align: center; border-right: 1px solid #3b2d22; border-bottom: 1px solid #3b2d22; }
+table.mx thead th { position: sticky; top: 0; z-index: 2; background: var(--rail); color: var(--ink-dim); font-weight: 500; min-width: 26px; height: 30px; }
+table.mx tbody th { position: sticky; left: 0; z-index: 1; background: var(--rail); color: var(--ink-light); font-weight: 500; text-align: left; padding: 0 6px; white-space: nowrap; }
+table.mx thead th.corner { left: 0; z-index: 3; text-align: left; padding: 0 6px; }
+table.mx .lvl-edge { border-left: 2px solid var(--brass); }
+table.mx tr.lvl-top > * { border-top: 2px solid var(--brass); }
+table.mx td button { width: 26px; height: 24px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--ink-light); font-size: 13px; line-height: 24px; }
+table.mx td button:hover { background: #4a3a2c; }
+table.mx td.same { background: #2c211a; }
+table.mx td.diag { background: repeating-linear-gradient(45deg, #2a1f18 0 4px, #33261d 4px 8px); }
+table.mx td.dead button, table.mx th.dead { color: #ffb4a6; }
+table.mx th.dead { background: #5a2a22; }
+table.mx td.passage button { color: var(--ink-light); }
+table.mx td.alternative button { color: #9fd0a0; }
+table.mx td.dangerous button { color: var(--wax-hi); font-weight: 700; }
+table.mx td.shortcut button { color: var(--brass); }
+table.mx td.oneway button { color: #b8c9ff; }
+table.mx td.esc button { text-decoration: underline dotted; }
+table.mx th .rm { margin-left: 6px; padding: 0 5px; font-size: 11px; line-height: 16px; border-radius: 2px; }
+table.mx th .add { padding: 0 6px; font-size: 11px; line-height: 18px; }
+.mx-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12.5px; color: var(--ink-dim); margin: 8px 0; }
+.mx-legend b { color: var(--ink-light); font-weight: 600; }
+.mx-ways { margin-top: 12px; }
+.mx-state { font-size: 13px; color: var(--ink-dim); min-height: 1.4em; margin-top: 6px; }
+.jmore { }
+.jcols { font-size: 13.5px; color: var(--ink-dim); }
 .jmore .jsec, .jdoc .jsec { display: block; }
 .jdoc { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 10px; font-size: 13.5px; color: var(--ink-dim); }
 .jdoc h3, .jcols h3 { font-family: var(--display); font-weight: 400; font-size: 16px; letter-spacing: 0.05em; color: var(--brass); margin: 14px 0 4px; }
@@ -165,6 +207,11 @@ header .lede { max-width: none; }
     <div class="field"><label for="levels">Levels</label><select id="levels"><option value="">Random (3–5)</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
     <div class="field"><label for="loops">Loops</label><select id="loops"><option value="">Random (1–3)</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
     <div class="field"><label for="wloops">Level loops</label><select id="wloops"><option value="">Random (0–2)</option><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></div>
+    <fieldset class="field radios" id="deadends" title="No Dead Ends: whichever single route is blocked, every room can still reach every other"><legend>Dead ends</legend>
+      <label><input type="radio" name="deadends" value="allow" checked> Allow Dead Ends</label>
+      <label><input type="radio" name="deadends" value="none"> No Dead Ends</label>
+    </fieldset>
+    <div class="field"><label for="notesat">Notes</label><select id="notesat"><option value="near">Beside each level</option><option value="right">Right side of the map</option><option value="page">Separate page</option></select></div>
     <div class="field"><label for="page">Page</label><select id="page"></select></div>
     <div class="field"><label for="zoom">Zoom</label><input id="zoom" type="range" min="1" max="3" step="0.25" value="1"></div>
     <span class="spacer"></span>
@@ -175,9 +222,15 @@ header .lede { max-width: none; }
   </div>
   <div class="status" id="status" aria-live="polite"></div>
 
-  <div class="sheet" id="sheet"></div>
+  <div class="maptabs" id="maptabs" role="tablist" aria-label="Map pages" hidden>
+    <button type="button" role="tab" id="tab-map" aria-selected="true" aria-controls="sheet">Map</button>
+    <button type="button" role="tab" id="tab-notes" aria-selected="false" aria-controls="notesheet" tabindex="-1">Notes</button>
+  </div>
+  <div class="sheet" id="sheet" role="tabpanel" aria-labelledby="tab-map"></div>
+  <div class="sheet" id="notesheet" role="tabpanel" aria-labelledby="tab-notes" hidden></div>
 
   <section class="graph" aria-label="Dungeon graph">
+    <div class="gcol gleft">
     <div class="card">
       <h2>The graph</h2>
       <p class="muted">Boxes are levels, solid lines the ways down, dashed lines the loop ways, labelled with their role. The role picks the build: an alternative route is an open stair or lift, a shortcut is hidden or barred from the far side, a dangerous path is a rope bridge, scree or chimney, and a one-way drop is a chute or a sheer shaft.</p>
@@ -186,6 +239,16 @@ header .lede { max-width: none; }
       <h2>Checks</h2>
       <ul id="checks" class="checks"></ul>
     </div>
+    <div class="card matrix" id="matrixcard">
+      <h2>Connection matrix</h2>
+      <p class="muted">The same graph as a table. Rows and columns are rooms, grouped by level (brass lines). Click a cell to change the link between its row room and column room; shift-click or right-click steps back. The schematic, the JSON and the checks follow at once, and the map is redrawn a moment after you stop.</p>
+      <div class="mx-legend"><span><b>●</b> passage (same level)</span><span><b>○</b> alternative route</span><span><b>!</b> dangerous path</span><span><b>»</b> shortcut, barred from the far side</span><span><b>→ ←</b> one-way drop, row to column or back</span><span><b>dotted</b> added to close a dead end</span><span><b style="color:#ffb4a6">red</b> a room in a dead-end pocket</span></div>
+      <div class="mx-wrap"><div id="matrix"></div></div>
+      <div class="mx-ways"><h3 class="muted" style="margin:0 0 4px;font-weight:500">Ways down (level to level; the planner picks the doorways)</h3><div class="mx-wrap" style="display:inline-block"><div id="waymatrix"></div></div></div>
+      <div class="mx-state" id="mxstate" aria-live="polite"></div>
+    </div>
+    </div>
+    <div class="gcol gright">
     <div class="card">
       <h2>Graph JSON</h2>
       <p class="muted">The dungeon as data. Edit it (rename levels, change room roles, give a loop way another <code>role</code>: alternative, shortcut, dangerous or oneway; join it to other levels; add a level) and draw it again. The <code>layout.salt</code> field pins the placement; delete it to let the forge try fresh placements.</p>
@@ -217,6 +280,8 @@ header .lede { max-width: none; }
           <dt>type</dt><dd>The kind of place. It picks the colours, the connectors, the creatures and the generated names. Choose one: <span class="opts"><code>crypt</code> <code>mine</code> <code>temple</code> <code>undercity</code> <code>oubliette</code> <code>seacave</code></span></dd>
           <dt>seed, variant</dt><dd>The random number the map grew from, and which re-roll of it passed the checks. Changing them alters the small details drawn inside rooms.</dd>
           <dt>title, subtitle</dt><dd>The words on the ribbon and the line under it. Leave <code>title</code> as <code>""</code> to use the name in the Dungeon name box.</dd>
+          <dt>compass</dt><dd>Optional. Where the compass rose goes. To put it somewhere exact, give <code>"x"</code> and <code>"y"</code> for its centre, measured from the top left: numbers up to 1 are fractions of the page (0.5 is the middle), larger numbers are page units (<code>layout.page</code> gives the page’s width and height in those units). Without <code>x</code> and <code>y</code>, <code>"place"</code> chooses: <code>"auto"</code> (the emptiest spot near the top right, the default), <code>"top-left"</code>, <code>"top-right"</code>, <code>"bottom-left"</code> or <code>"bottom-right"</code> (the emptiest spot near that corner of the page), or <code>"none"</code>. <code>"size"</code> scales it, from 0.4 to 2. Each drawn map writes back <code>"landed"</code>, where the rose ended up, in both kinds of number; copy those into <code>x</code> and <code>y</code>, change them, and press Draw this JSON to move it. Remove <code>x</code> and <code>y</code> to go back to <code>place</code>. Example: <code>"compass": { "x": 0.12, "y": 0.85, "size": 0.8 }</code>.</dd>
+          <dt>deadEnds</dt><dd>Optional. <code>"none"</code> asks for a dungeon with no dead ends: block any one route and every room can still reach every other. The checks then warn about any pocket of rooms that hangs off a single route. One-way drops and barred shortcuts do not count as ways out. Links the generator added to close a dead end carry <code>"escape": true</code>.</dd>
           <dt>layout.salt</dt><dd>Which of several trial placements on the page was kept. Delete the whole <code>"layout"</code> entry to let the app try fresh placements when you redraw.</dd>
         </dl>
         </section>
@@ -257,14 +322,14 @@ header .lede { max-width: none; }
           <dt>loop</dt><dd>A second route between rooms on two levels, which closes a loop (1–3 of them): <code>"from"</code> and <code>"to"</code> each name a <code>level</code> and a <code>room</code>. The app tries to use those rooms but may land in a neighbour if the page needs it.</dd>
           <dt>role</dt><dd>Loops only: what the second route is like, which picks how it is built. <span class="opts"><code>alternative</code> <code>shortcut</code> <code>dangerous</code> <code>oneway</code></span> An <i>alternative</i> is an open stair, lift or the like; a <i>shortcut</i> is hidden (a secret stair, crawlway or well) or barred from the far side; a <i>dangerous</i> path is a rope bridge, scree slope or rock chimney; a <i>oneway</i> drop is a chute or sheer shaft.</dd>
           <dt>oneWay</dt><dd><code>true</code> on a one-way loop; set with the <code>oneway</code> role.</dd>
-          <dt>ifHidden</dt><dd>Words used only if a loop can’t be built on the page: it is then drawn as a trapdoor and a dotted line, and the legend calls it this (e.g. <code>"a bone chute"</code>).</dd>
+          <dt>ifHidden</dt><dd>No longer used, and accepted only so older files still load. Every loop way is now built as a real connector. When the page has no room for one, the generator reroutes it between nearer levels, and a loop in a graph you wrote yourself is left off the map with a warning in the checks.</dd>
         </dl>
         </section>
         <section class="jsec">
         <h3>resolved: what was actually built</h3>
         <p>After drawing, the app adds a <code>resolved</code> group to each way and loop, recording the result. You never need to edit it; it is ignored when you redraw.</p>
         <dl>
-          <dt>built</dt><dd><code>true</code> if it was built on the map, <code>false</code> if it fell back to a trapdoor.</dd>
+          <dt>built</dt><dd><code>true</code> if it was built on the map; <code>false</code> only for a loop in a hand-written graph that the page had no room for, which is then left off the map.</dd>
           <dt>fromLevel, toLevel, fromRoom, toRoom</dt><dd>Where it actually leaves and arrives; it always goes downhill from <i>from</i> to <i>to</i>.</dd>
           <dt>build</dt><dd>The template used, e.g. <code>grand</code>, <code>spiral</code>, <code>switchback</code>, <code>lift</code>, <code>chute</code>, <code>secretstair</code>, <code>crawlway</code>.</dd>
           <dt>parts</dt><dd>The pieces in order, with their flavour in brackets, e.g. <code>"chute (bone chute)"</code>.</dd>
@@ -282,19 +347,23 @@ header .lede { max-width: none; }
         </section>
       </div>
     </div>
-    <div class="card jmore" hidden><h2>Graph JSON, continued</h2><div class="jcols"></div></div>
+    <div class="card jmore" hidden><h2>Graph JSON, continued</h2>
+      <div class="jfold" id="jfold"><div class="jcols"></div></div>
+      <a href="#jfold" class="readmore" id="readmore" role="button" aria-expanded="false" aria-controls="jfold" hidden>Read more…</a>
+    </div>
+    </div>
   </section>
 
   <div class="notes">
-    <div><h2>Reading the map</h2>Each level is a cut slice of earth with its front walls removed. Numbered circles match the legends. Lettered diamonds mark where each way starts (↓) and where it arrives (↑). Ways down are lettered first; loop ways follow. Hidden ways run inside a sleeve of rock with its near face cut away. If a loop way could not be built on the page, it falls back to a trapdoor and a dotted line.</div>
+    <div><h2>Reading the map</h2>Each level is a cut slice of earth with its front walls removed. Numbered circles match the legends. Lettered diamonds mark where each way starts (↓) and where it arrives (↑). Ways down are lettered first; loop ways follow. Hidden ways run inside a sleeve of rock with its near face cut away. Every loop way is built: one the page has no room for is rerouted between nearer levels before the map is drawn.</div>
     <div><h2>The graph</h2>Rooms are the nodes. Passages join rooms on one level; built ways join a level to one below it, at most two per level because a level has two front faces to leave from; loop ways join any two levels and are built the same way, from a front face down to a back-wall doorway. Loops = edges − rooms + 1.</div>
-    <div><h2>The checks</h2>A graph must pass two stages. Structure: 3–5 levels, one entrance, every level reached by one built way, rooms joined on each level, 1–3 loops. Page: every level, way and loop way built with no overlaps, and the drawing filling at least a set share of the chosen page. A graph that falls short is re-rolled as a variant of the same seed.</div>
+    <div><h2>The checks</h2>A graph must pass two stages. Structure: 3–5 levels, one entrance, every level reached by one built way, rooms joined on each level, 1–3 loops (more if you ask for no dead ends or add them by hand). Ground: every room can be walked to, with a stair wherever the floor height changes, and every arriving doorway can be seen from its connector. Page: every level, way and loop way built with no overlaps, and the drawing filling at least a set share of the chosen page. A graph that falls short is re-rolled as a variant of the same seed.</div>
     <div><h2>Why loops</h2>A dungeon that is a tree has one route to everything. Loops give a party choices: a second way down, a shortcut back up, a one-way chute that cuts them off. Each loop way carries a role in the JSON, and the role picks its connector. Loops within a level are extra passages between rooms at least two passages apart. The idea follows Jennell Jaquays’s multi-path dungeon levels and Joris Dormans’s cyclic dungeon generation.</div>
     <div><h2>No redundant links</h2>Two routes never join the same pair of rooms unless one is hidden, barred or one-way. A second link between the same two levels must arrive at least two passages from the first, so its loop runs through three rooms or more. Links that skip a level are rare outside five-level dungeons.</div>
     <div><h2>Bestiary</h2>Twenty-eight occupants, each with a threat (0 harmless to 4 deadly), a habitat and the dungeon types it haunts. Rooms get their set pieces from their recipe, and now and then a wanderer drawn from the level’s pool: deeper levels lean to deadlier things, and water-dwellers (gators, octopuses, merrow, sirens) wait beside the water.</div>
     <div><h2>Names</h2>Every new map gets a name built from its type of place: an adjective, a word for the place, and a person, a power or a place-name, as in “The Reeking Cisterns of the Rat King” or “The Salt Cove of Captain Morrow”. Type over it to use your own, or press New name.</div>
     <div><h2>Long drops</h2>No ladder runs more than about 15 ft: tall shafts are staged on ledges, and deep drops prefer spiral stairs, switchback towers, lifts (cage, chain platform, coffin lift, cargo net), rock chimneys or a waystation part-way down.</div>
-    <div class="history"><h2>Versions</h2><p><b>I. IsoDungeon Forge.</b> A single branch of three levels, drawn as cut-away isometric slices in a hand-inked style on parchment: crypt, mine and temple, with room legends, generated names and SVG export.</p><p><b>II. Graph architecture.</b> The app split into separate modules: a random graph generator (3–5 levels, 1–3 loops), a validator for structure, a page-fitting stage that tries placements and variants until the map fills the page, and a renderer. Dungeons became JSON you can edit and redraw, with a schematic and page sizes; loop ways were built from the same stairs, bridges and shafts as the ways down, painted in depth order.</p><p><b>III. Parts, roles and new types.</b> A library of connector parts: hidden ways in cut-away rock sleeves, staged shafts, switchback towers, lifts, waystations and natural forms. Loop ways gained roles (alternative, shortcut, dangerous, one-way), redundancy rules and loops within a level. Undercity, Oubliette and Sea Cave joined, each defined by one data entry.</p><p><b>Bestiary and license.</b> Occupants became data (threat, habitat, dungeon types) with sixteen new creatures, restyled after a reference sheet, and wandering occupants chosen by depth. The code took the MIT License and the maps CC0. The app was renamed the Isometric Subterranean Cartographer.</p></div>
+    <div class="history"><h2>Versions</h2><p><b>I. IsoDungeon Forge.</b> A single branch of three levels, drawn as cut-away isometric slices in a hand-inked style on parchment: crypt, mine and temple, with room legends, generated names and SVG export.</p><p><b>II. Graph architecture.</b> The app split into separate modules: a random graph generator (3–5 levels, 1–3 loops), a validator for structure, a page-fitting stage that tries placements and variants until the map fills the page, and a renderer. Dungeons became JSON you can edit and redraw, with a schematic and page sizes; loop ways were built from the same stairs, bridges and shafts as the ways down, painted in depth order.</p><p><b>III. Parts, roles and new types.</b> A library of connector parts: hidden ways in cut-away rock sleeves, staged shafts, switchback towers, lifts, waystations and natural forms. Loop ways gained roles (alternative, shortcut, dangerous, one-way), redundancy rules and loops within a level. Undercity, Oubliette and Sea Cave joined, each defined by one data entry.</p><p><b>Bestiary and license.</b> Occupants became data (threat, habitat, dungeon types) with sixteen new creatures, restyled after a reference sheet, and wandering occupants chosen by depth. The code took the MIT License and the maps CC0. The app was renamed the Isometric Subterranean Cartographer.</p><p><b>IV. Entrances, escapes and the matrix.</b> Every arriving doorway is chosen so its approach can be seen, walls standing in front of it are cut down to stubs, and nothing tall is placed in its line of sight. Corridors take the height of the rooms they join, with a stair wherever they meet a room at another height, so every room can be walked to. A No Dead Ends option rings every level and joins the levels in a ring, closing the two farthest dead-end pockets with each new route (after Eswaran and Tarjan). A connection matrix edits the graph cell by cell, with the schematic, the JSON, the checks and the map following along. Dotted-line hidden ways are gone: a loop way the page cannot hold is rerouted between nearer levels, and loops that skip levels are rarer, since a survey of 240 maps found they were the ones that failed (9–12% against 2%). Dead ends became a pair of radio buttons; the notes can sit beside each level, down the right side or on a separate Notes page with its own tab; and the compass rose can be placed from the JSON.</p></div>
     <div class="license"><h2>Licenses</h2><p><b>The code</b> is free software under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noopener">MIT License</a>: use it, change it, share it or sell it, as long as the copyright and license notice stay with it. It was designed by Daniel O’Neil and written with Claude, Anthropic’s AI model.</p><p><b>The maps</b> you make here are yours to use however you like: each one is dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC0 1.0</a>, as the fine print at its foot says (see the <a href="https://creativecommons.org/about/cclicenses/" target="_blank" rel="noopener">Creative Commons licenses</a>). Credit (“made with the Isometric Subterranean Cartographer”) is appreciated but not required.</p><p><b>The fonts</b> embedded in the page and in each map, MedievalSharp (Wojciech Kalinowski) and Almendra (Ana Sanfelippo), are used under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener">SIL Open Font License 1.1</a>, which allows them to be bundled with software but not sold on their own.</p></div>
   </div>
   <textarea id="svgout" aria-hidden="true" tabindex="-1"></textarea>
@@ -410,8 +479,8 @@ if (typeof module !== 'undefined' && module && module.exports) module.exports = 
                       (stairs, bridges, shafts…).  Ways form a tree.
              loop     a second built way between rooms on two different
                       levels (kind "secret" is read the same way).  These
-                      close the loops.  If the page has no room to build one,
-                      it is drawn as a hidden way described by "ifHidden".
+                      close the loops.  Every one is built as a real
+                      connector; one the page cannot hold is rerouted.
    Loops (cyclomatic number) = edges − rooms + 1, counting a way as one
    edge.  With tree-shaped passages and a tree of ways, every loop comes
    from a loop way, so "2 loops" means two loop ways, each giving the
@@ -433,12 +502,12 @@ function Rand(seed) {
   return R;
 }
 
-const LIMITS = { levels: [3, 5], loops: [1, 3], levelLoops: [0, 3], rooms: { dungeon: [2, 6], cave: [2, 4] }, W: [8, 20], H: [8, 16], waysDown: 2 };
+const LIMITS = { levels: [3, 5], loops: [1, 3], levelLoops: [0, 3], escape: { loops: [1, 7], levelLoops: [0, 12] }, rooms: { dungeon: [2, 6], cave: [2, 4] }, W: [8, 20], H: [8, 16], waysDown: 2 };
 
 /* --- what each kind of dungeon is made of ------------------------------
    One entry per dungeon type holds everything that type needs:
      surface/dungeon/cave  level kinds: room roles, heights, liquids, names
-     hidden                words for a loop way drawn as a fallback
+     hidden                (unused: older versions drew unbuilt loop ways as these)
      roleW                 how often each loop role comes up
      conn                  connectors: template weights (w), part flavours
                            (parts: kind → [style, label] choices), ladder and
@@ -557,6 +626,152 @@ const ROLES = ['alternative', 'shortcut', 'dangerous', 'oneway'];
 const WORD = ['zero', 'one', 'two', 'three', 'four', 'five', 'six'];
 const cap = s => s[0].toUpperCase() + s.slice(1);
 
+/* --- dead ends ------------------------------------------------------------
+   A dead end is a pocket of rooms that hangs off the rest by a single route (a
+   bridge, in graph terms): chased in there, a party has no way out but back.
+   twoEdge() finds bridges (Tarjan's lowlink method) and groups the rest into
+   2-edge-connected components; the pockets are the leaves of the tree those
+   components form.  Edges are {id, a, b}; parallel edges are fine.            */
+function twoEdge(nodes, edges) {
+  const adj = new Map(nodes.map(n => [n, []]));
+  for (const e of edges) { if (!adj.has(e.a) || !adj.has(e.b) || e.a === e.b) continue; adj.get(e.a).push([e.b, e.id]); adj.get(e.b).push([e.a, e.id]); }
+  const tin = new Map(), low = new Map(), bridges = new Set(); let t = 0;
+  for (const root of nodes) {
+    if (tin.has(root)) continue;
+    const stack = [[root, null, 0]]; tin.set(root, t); low.set(root, t); t++;
+    while (stack.length) {
+      const top = stack[stack.length - 1], [v, pe] = top, list = adj.get(v);
+      if (top[2] < list.length) {
+        const [w, eid] = list[top[2]++]; if (eid === pe) continue;
+        if (tin.has(w)) low.set(v, Math.min(low.get(v), tin.get(w)));
+        else { tin.set(w, t); low.set(w, t); t++; stack.push([w, eid, 0]); }
+      } else {
+        stack.pop();
+        if (stack.length) { const u = stack[stack.length - 1][0]; low.set(u, Math.min(low.get(u), low.get(v))); if (low.get(v) > tin.get(u)) bridges.add(pe); }
+      }
+    }
+  }
+  const comp = new Map(); let nc = 0;
+  for (const n of nodes) {
+    if (comp.has(n)) continue; const st = [n]; comp.set(n, nc);
+    while (st.length) { const v = st.pop(); for (const [w, eid] of adj.get(v)) if (!bridges.has(eid) && !comp.has(w)) { comp.set(w, nc); st.push(w); } }
+    nc++;
+  }
+  const deg = Array(nc).fill(0), tree = Array.from({ length: nc }, () => []);
+  for (const e of edges) if (bridges.has(e.id)) { const x = comp.get(e.a), y = comp.get(e.b); deg[x]++; deg[y]++; tree[x].push(y); tree[y].push(x); }
+  const members = Array.from({ length: nc }, () => []); for (const n of nodes) members[comp.get(n)].push(n);
+  return { comp, bridges: [...bridges], nc, deg, tree, members };
+}
+// the two dead-end pockets farthest apart (joining them closes the most bridges)
+function farLeaves(nodes, edges, R) {
+  const te = twoEdge(nodes, edges); if (te.nc < 2) return null;
+  const leaves = te.deg.map((d, i) => d <= 1 ? i : -1).filter(i => i >= 0); if (leaves.length < 2) return null;
+  const far = s => { const d = new Map([[s, 0]]), q = [s]; while (q.length) { const v = q.shift(); for (const w of te.tree[v]) if (!d.has(w)) { d.set(w, d.get(v) + 1); q.push(w); } } return d; };
+  const u = R.pick(leaves), du = far(u); let v = leaves.find(l => l !== u), best = -1;
+  for (const l of leaves) if (l !== u && (du.get(l) ?? 99) > best) { best = du.get(l) ?? 99; v = l; }
+  return [te.members[u], te.members[v]];
+}
+// does a link count as a way out?  One-way drops and barred shortcuts do not
+const counts = e => !(e.oneWay || e.role === 'oneway' || e.role === 'shortcut');
+// where the dead ends are.  When every way down names its rooms (the resolved
+// record of a drawn map) the test is exact; otherwise it asks for something a
+// little stronger: every level a ring, and the levels joined in a ring.
+function deadEnds(g) {
+  const G = index(g), rooms = [...G.rooms.keys()], entrance = G.order.length ? G.levels.get(G.order[0]).rooms[0] : null;
+  const wayRooms = w => { const r = w.resolved || {}; return [w.from && w.from.room || r.fromRoom, w.to && w.to.room || r.toRoom]; };
+  const exact = G.ways.every(w => { const [a, b] = wayRooms(w); return G.rooms.has(a) && G.rooms.has(b); });
+  const pockets = [];
+  const leafPockets = (te, skip) => te.deg.forEach((d, i) => { if (d === 1 && !te.members[i].includes(skip)) pockets.push(te.members[i]); });
+  if (exact) {
+    const es = [];
+    for (const p of G.passages) es.push({ id: p.id, a: p.a, b: p.b });
+    for (const w of G.ways) { const [a, b] = wayRooms(w); es.push({ id: w.id, a, b }); }
+    for (const s of G.secrets) if (counts(s) && !(s.resolved && s.resolved.built === false)) es.push({ id: s.id, a: s.from.room, b: s.to.room });
+    leafPockets(twoEdge(rooms, es), entrance);
+  } else {
+    for (const L of G.levels.values()) {
+      const es = G.passages.filter(p => L.rooms.includes(p.a)).map(p => ({ id: p.id, a: p.a, b: p.b }));
+      leafPockets(twoEdge(L.rooms, es), L.rooms.includes(entrance) ? entrance : null);
+    }
+    const es = G.ways.map(w => ({ id: w.id, a: w.from.level, b: w.to.level })).concat(G.secrets.filter(counts).map(s => ({ id: s.id, a: s.from.level, b: s.to.level })));
+    const te = twoEdge([...G.levels.keys()], es);
+    te.deg.forEach((d, i) => { if (d === 1 && !te.members[i].includes(G.order[0])) pockets.push(te.members[i].flatMap(l => G.levels.get(l).rooms)); });
+  }
+  const set = new Set(pockets.flat());
+  return { exact, pockets, rooms: set };
+}
+
+// Join the level pockets of the way tree with loop ways until no level hangs by a
+// single route.  Of the levels on the two sides of each pocket, the pair closest
+// in depth is joined (their connector has fewest levels to get past on the page);
+// pairs listed in o.avoid (already tried and unbuildable) are skipped.
+const isLoopEdge = e => e.kind === 'loop' || e.kind === 'secret';
+function closeLevelPockets(levelIds, depthOf, rooms, edges, R, o = {}) {
+  const avoid = o.avoid || new Set(), hatch = o.hatch || new Set(), pairs = o.pairs || new Set(), key = (x, y) => x < y ? x + '|' + y : y + '|' + x;
+  let added = 0;
+  for (let guard = 0; guard < 8; guard++) {
+    const es = edges.filter(e => e.kind === 'way' || (isLoopEdge(e) && counts(e))).map(e => ({ id: e.id, a: e.from.level, b: e.to.level }));
+    const pair = farLeaves(levelIds, es, R); if (!pair) break;
+    // join the two pockets if that pair is still open; if not, a pocket is also
+    // closed by joining it to any level outside it (the cycle then covers its bridge)
+    const [cu, cv] = pair, cand = [];
+    for (const [P, Q] of [[cu, cv], [cv, cu]]) for (const x of P) for (const y of levelIds) {
+      if (P.includes(y) || avoid.has(key(x, y))) continue;
+      cand.push({ x, y, far: Q.includes(y) ? 0 : 1, gap: Math.abs(depthOf(x) - depthOf(y)) });
+    }
+    if (!cand.length) break;
+    const f0 = Math.min(...cand.map(q => q.far)), c0 = cand.filter(c => c.far === f0), g0 = Math.min(...c0.map(q => q.gap)), q = R.pick(c0.filter(c => c.gap === g0));
+    const [a, b] = depthOf(q.x) <= depthOf(q.y) ? [q.x, q.y] : [q.y, q.x];
+    const pickRoom = lv => { const all = rooms.filter(r => r.level === lv), fresh = all.filter(r => !hatch.has(r.id)); return R.pick(fresh.length ? fresh : all).id; };
+    let ra, rb, k = 0; do { ra = pickRoom(a); rb = pickRoom(b); } while (pairs.has(ra + '|' + rb) && ++k < 20);
+    pairs.add(ra + '|' + rb); pairs.add(rb + '|' + ra); hatch.add(ra); hatch.add(rb);
+    edges.push({ id: o.nextId(), kind: 'loop', role: R.pick(['alternative', 'dangerous']), from: { level: a, room: ra }, to: { level: b, room: rb }, escape: true });
+    added++;
+  }
+  return added;
+}
+
+/* --- rerouting loop ways the page could not hold --------------------------
+   Every loop way must be built as a real connector.  When the planner finds no
+   room for some, they are taken out and replaced: with no dead ends, by the
+   pocket-closing loops still needed (between the nearest levels that have not
+   already failed); otherwise each by a loop of the same role between the
+   nearest pair of levels not yet tried.  The ids are reused, so E stays E.     */
+function rerouteLoops(g0, failedIds, round, avoid) {
+  const g = JSON.parse(JSON.stringify(g0)), G0 = index(g0), key = (x, y) => x < y ? x + '|' + y : y + '|' + x;
+  const R = Rand(((g.seed >>> 0) ^ Math.imul((g.variant | 0) + 1, 0x9E3779B1) ^ Math.imul(round, 0x85EBCA77) ^ 0x2545F491) >>> 0);
+  const failed = g.edges.filter(e => isLoopEdge(e) && failedIds.includes(e.id));
+  for (const e of failed) avoid.add(key(e.from.level, e.to.level));
+  g.edges = g.edges.filter(e => !failed.includes(e));
+  const ids = failed.map(e => e.id), nextId = () => ids.length ? ids.shift() : (() => { const used = new Set(g.edges.map(e => e.id)); for (let i = 0; i < 26; i++) { const c = String.fromCharCode(65 + i); if (!used.has(c)) return c; } return 'X' + round; })();
+  const depthOf = id => G0.depth.get(id) ?? 0, hatch = new Set(), pairs = new Set();
+  for (const e of g.edges) if (isLoopEdge(e)) { hatch.add(e.from.room); hatch.add(e.to.room); pairs.add(e.from.room + '|' + e.to.room); pairs.add(e.to.room + '|' + e.from.room); }
+  if (g.deadEnds === 'none') {
+    closeLevelPockets(G0.order, depthOf, g.rooms, g.edges, R, { avoid, hatch, pairs, nextId });
+    // every open pair has failed once: try them again with other rooms (other doorways)
+    closeLevelPockets(G0.order, depthOf, g.rooms, g.edges, R, { avoid: new Set(), hatch, pairs, nextId });
+  } else {
+    const joined = new Set(g.edges.filter(isLoopEdge).map(e => key(e.from.level, e.to.level)));
+    for (const old of failed) {
+      const cand = [];
+      for (let i = 0; i < G0.order.length; i++) for (let j = i + 1; j < G0.order.length; j++) {
+        const x = G0.order[i], y = G0.order[j], k = key(x, y); if (avoid.has(k) || joined.has(k)) continue;
+        cand.push({ x, y, gap: Math.abs(depthOf(x) - depthOf(y)) });
+      }
+      if (!cand.length) continue;   // nowhere left to put it: the loop is dropped
+      const g1 = Math.min(...cand.map(q => q.gap)), q = R.pick(cand.filter(c => c.gap === g1));
+      let [a, b] = depthOf(q.x) <= depthOf(q.y) ? [q.x, q.y] : [q.y, q.x];
+      const pickRoom = lv => { const all = g.rooms.filter(r => r.level === lv), fresh = all.filter(r => !hatch.has(r.id)); return R.pick(fresh.length ? fresh : all).id; };
+      const ra = pickRoom(a), rb = pickRoom(b); hatch.add(ra); hatch.add(rb); joined.add(key(a, b));
+      const e = { id: nextId(), kind: 'loop', role: old.role || 'alternative', from: { level: a, room: ra }, to: { level: b, room: rb } };
+      if (old.oneWay || old.role === 'oneway') e.oneWay = true;
+      g.edges.push(e);
+    }
+  }
+  delete g.layout;
+  return g;
+}
+
 /* --- generator ----------------------------------------------------------
    opts: { type, seed, levels?, loops?, title?, variant? }
    Deterministic for (type, seed, levels, loops, variant). */
@@ -568,6 +783,7 @@ function generate(opts) {
   const R0 = Rand(((opts.seed >>> 0) * 2654435761 + type.length) >>> 0);
   const nL0 = R0.int(LIMITS.levels[0], LIMITS.levels[1]), nC0 = R0.int(LIMITS.loops[0], LIMITS.loops[1]), nW0 = R0.int(0, 2);
   const nL = opts.levels || nL0, nC = opts.loops || nC0, nWwant = opts.levelLoops ?? nW0;
+  const noDeadEnds = opts.deadEnds === 'none';
 
   // 1. the tree of levels: each new level hangs from one with a free front face
   const T = [{ depth: 0, parent: -1, kids: [] }];
@@ -626,17 +842,18 @@ function generate(opts) {
   }
 
   // 6. loop ways between levels, each with a role that picks its connector.
-  //    Joining branches is preferred; links that skip a level are rarer (and
-  //    only common in five-level dungeons); a second link between a level and
-  //    the one just below it is the least likely.
+  //    Joining branches is preferred.  Links that skip levels are rare: on the
+  //    page their connector has to pass the levels in between, and in a survey
+  //    of 240 maps those were the loop ways that most often found no room
+  //    (9–12% failed with a depth gap of 2–4, against 2% for neighbours).
   const anc = (a, b) => { for (let k = order[b]; k >= 0; k = T[k].parent) if (k === order[a]) return true; return false; };
   const pairs = [];
   for (let a = 0; a < nL; a++) for (let b = a + 1; b < nL; b++) {
     const dd = Math.abs(levels[a].depth - levels[b].depth), related = anc(a, b) || anc(b, a);
-    pairs.push({ a, b, w: related ? (dd >= 2 ? (nL >= 5 ? 0.9 : 0.35) : 0.7) : dd >= 2 ? 0.9 : 1.8 });
+    pairs.push({ a, b, w: related ? (dd >= 2 ? (nL >= 5 ? 0.3 : 0.15) : 0.7) : dd >= 2 ? 0.5 : 1.8 });
   }
   const roleW = { ...{ alternative: 1, shortcut: 1, dangerous: 0.8, oneway: 0.7 }, ...(kit.roleW || {}) };
-  const viaPool = R.shuffle(kit.hidden.slice()), hatchRooms = new Set(), roomPairs = new Set();
+  const hatchRooms = new Set(), roomPairs = new Set();
   for (let c = 0; c < nC; c++) {
     const pr = R.weighted(pairs, pairs.map(p => p.w));
     pr.w *= 0.2;
@@ -649,18 +866,42 @@ function generate(opts) {
     let ra, rb, k = 0;
     do { ra = R.pick(roomsOf(a)).id; rb = R.pick(roomsOf(b)).id; } while (roomPairs.has(ra + '|' + rb) && ++k < 20);
     roomPairs.add(ra + '|' + rb); roomPairs.add(rb + '|' + ra);
-    let via = viaPool[c % viaPool.length];
-    const e = { id: letter(), kind: 'loop', role, from: { level: levels[a].id, room: ra }, to: { level: levels[b].id, room: rb }, ifHidden: via };
+    const e = { id: letter(), kind: 'loop', role, from: { level: levels[a].id, room: ra }, to: { level: levels[b].id, room: rb } };
     if (role === 'oneway') e.oneWay = true;
     hatchRooms.add(ra); hatchRooms.add(rb);
     edges.push(e);
   }
 
-  const ways = nL - 1;
+  // 7. no dead ends: close every pocket so that, whichever single route is blocked,
+  //    every room can still reach every other.  First each level becomes a ring of
+  //    rooms (extra passages), then the levels themselves (extra loop ways).  Joining
+  //    the two farthest dead-end pockets each time follows Eswaran & Tarjan (1976):
+  //    one new route can close two pockets at once.
+  let nEsc = 0, nEscW = 0;
+  if (noDeadEnds) {
+    const linked = (x, y) => edges.some(e => (e.a === x && e.b === y) || (e.a === y && e.b === x) || (e.from && e.to && ((e.from.room === x && e.to.room === y) || (e.from.room === y && e.to.room === x))));
+    for (const lv of levels) {
+      const ids = rooms.filter(r => r.level === lv.id).map(r => r.id);
+      for (let guard = 0; guard < 12; guard++) {
+        const es = edges.filter(e => e.kind === 'passage' && ids.includes(e.a)).map(e => ({ id: e.id, a: e.a, b: e.b }));
+        const pair = farLeaves(ids, es, R); if (!pair) break;
+        const [cu, cv] = pair, opts2 = [];
+        for (const x of cu) for (const y of cv) if (!linked(x, y)) opts2.push([x, y]);
+        if (!opts2.length) break;
+        const [x, y] = R.pick(opts2);
+        edges.push({ id: 'p' + (++pn), kind: 'passage', a: x, b: y, loop: true, escape: true }); nEscW++;
+      }
+    }
+    nEsc = closeLevelPockets(levels.map(l => l.id), id => levels.find(l => l.id === id).depth, rooms, edges, R,
+      { hatch: hatchRooms, pairs: roomPairs, nextId: letter });
+  }
+
+  const ways = nL - 1, nCt = nC + nEsc, nWt = nW + nEscW;
   return {
     format: 'isodungeon-graph', version: 1, type, seed: opts.seed >>> 0, variant,
+    ...(noDeadEnds ? { deadEnds: 'none' } : {}),
     title: opts.title || '',
-    subtitle: `${cap(WORD[nL])} levels deep, ${WORD[ways]} ways down, ${WORD[nC]} ${nC === 1 ? 'loop' : 'loops'} between levels` + (nW ? ` and ${WORD[nW]} within ${nW === 1 ? 'a level' : 'levels'}` : ''),
+    subtitle: `${cap(WORD[nL])} levels deep, ${WORD[ways]} ways down, ${WORD[nCt] || nCt} ${nCt === 1 ? 'loop' : 'loops'} between levels` + (nWt ? ` and ${WORD[nWt] || nWt} within ${nWt === 1 ? 'a level' : 'levels'}` : '') + (noDeadEnds ? '; no dead ends' : ''),
     levels, rooms, edges,
   };
 }
@@ -696,7 +937,7 @@ function levelPath(G, a, b) {
 /* --- structural validator ---------------------------------------------- */
 function validate(g) {
   const checks = []; let G = null, loopList = [];
-  const check = (ok, label, detail) => { checks.push({ ok: !!ok, label, detail: detail || '' }); return ok; };
+  const check = (ok, label, detail, soft) => { checks.push({ ok: !!ok, label, detail: detail || '', ...(soft ? { soft: true } : {}) }); return ok; };
   if (!g || typeof g !== 'object' || Array.isArray(g)) { check(false, 'Graph', 'not a JSON object'); return finish(); }
   check(g.format === 'isodungeon-graph' && g.version === 1, 'Format', 'isodungeon-graph, version 1');
   check(KITS[g.type], 'Dungeon type', String(g.type));
@@ -728,7 +969,7 @@ function validate(g) {
   check(treeOk, 'Way tree', badWay.length ? 'bad ways: ' + badWay.map(w => w.id).join(', ') : twoIn.length ? 'more than one way into ' + twoIn.map(l => l.id).join(', ') : G.roots.length !== 1 ? `${G.roots.length} levels have no way in (need exactly one entrance)` : G.order.length !== nL ? 'some levels cannot be reached' : `entrance ${G.order[0]}; each lower level has one way in`);
   const crowded = [...G.levels.values()].filter(l => l.outWays.length > LIMITS.waysDown);
   check(!crowded.length, 'Ways down per level', crowded.length ? crowded.map(l => `${l.id} has ${l.outWays.length}`).join('; ') : `at most ${LIMITS.waysDown} (one per front face)`);
-  // hidden ways
+  // loop ways
   const badSec = G.secrets.filter(s => { const A = G.rooms.get(s.from && s.from.room), B = G.rooms.get(s.to && s.to.room); return !A || !B || A.level !== s.from.level || B.level !== s.to.level || A.level === B.level; });
   check(!badSec.length, 'Loop ways', badSec.length ? badSec.map(s => s.id).join(', ') + ' need rooms on two different levels' : `${G.secrets.length} join rooms on different levels`);
   const badRole = G.secrets.filter(s => s.role != null && !ROLES.includes(s.role));
@@ -742,17 +983,35 @@ function validate(g) {
   // loops, counted between levels and within levels
   const E = G.passages.length + G.ways.length + G.secrets.length, V = G.rooms.size, loops = E - V + 1, between = G.secrets.length, within = loops - between;
   loopList = treeOk ? G.secrets.map(s => ({ id: s.id, role: s.role || 'alternative', levels: levelPath(G, s.from.level, s.to.level) })) : [];
-  check(between >= LIMITS.loops[0] && between <= LIMITS.loops[1] && within >= LIMITS.levelLoops[0] && within <= LIMITS.levelLoops[1], 'Loops', `${between} between levels (allowed ${LIMITS.loops.join('–')}), ${within} within levels (allowed ${LIMITS.levelLoops.join('–')}); ${E} edges, ${V} rooms`);
+  // the generator makes 1–3 and 0–3 (more with no dead ends); a hand-edited graph may
+  // go up to the no-dead-ends limits, with a warning that the page may not hold it
+  const LB = LIMITS.escape.loops, LW = LIMITS.escape.levelLoops, NB = g.deadEnds === 'none' ? LB : LIMITS.loops, NW = g.deadEnds === 'none' ? LW : LIMITS.levelLoops;
+  if (check(between >= LB[0] && between <= LB[1] && within >= LW[0] && within <= LW[1], 'Loops', `${between} between levels (allowed ${LB.join('–')}), ${within} within levels (allowed ${LW.join('–')}); ${E} edges, ${V} rooms`))
+    if (between > NB[1] || within > NW[1]) check(false, 'Busy graph', `more loops than the generator makes (${NB.join('–')} between, ${NW.join('–')} within); the planner may not fit every loop way on the page`, true);
+  if (treeOk && !cross.length && !split.length) {
+    const de = deadEnds(g), n = de.rooms.size, P = de.pockets.length, list = de.pockets.map(p => p.join(' + ')).join('; ');
+    // a warning, not a failure: a hand-edited graph with a dead end can still be drawn
+    if (g.deadEnds === 'none') check(!n, 'No dead ends', n ? `${P} ${P === 1 ? 'pocket hangs' : 'pockets hang'} off a single route: ${list}` : 'block any one route and every room can still reach every other (one-way drops and barred shortcuts are not counted as ways out)', true);
+    else check(true, 'Dead ends', n ? `allowed: ${n} ${n === 1 ? 'room' : 'rooms'} in ${P} ${P === 1 ? 'pocket' : 'pockets'} with one way in (${list})` : 'none');
+  }
   return finish();
 
   function finish() {
-    const ok = checks.every(c => c.ok);
+    // the compass rose's place on the page (optional; see the JSON notes)
+    if (g.compass !== undefined) {
+      const c = g.compass, P = ['auto', 'top-right', 'top-left', 'bottom-right', 'bottom-left', 'xy', 'none'], num = v => typeof v === 'number' && Number.isFinite(v), pos = v => v == null || (num(v) && v >= 0);
+      const good = !!c && typeof c === 'object' && (c.place == null || P.includes(c.place)) && pos(c.x) && pos(c.y) && (c.place !== 'xy' || (num(c.x) && num(c.y))) && (c.size == null || (num(c.size) && c.size >= 0.4 && c.size <= 2));
+      const at = v => v <= 1 ? `${Math.round(v * 100)}%` : `${Math.round(v)} page units`, xy = !!c && num(c.x) && num(c.y) && c.place !== 'none';
+      check(good, 'Compass', good ? (c.place === 'none' ? 'left off the map' : xy ? `centred at ${at(c.x)} across, ${at(c.y)} down the page${c.size && c.size !== 1 ? ', size ' + c.size : ''}` : `${c.place || 'auto'}${c.size && c.size !== 1 ? ', size ' + c.size : ''}`)
+        : `"compass" needs "place" as one of ${P.join(', ')}; "x" and "y" as numbers from 0 (fractions up to 1, page units above that); "size" between 0.4 and 2`);
+    }
+    const ok = checks.every(c => c.ok || c.soft);
     const stats = G ? { levels: nL, rooms: G.rooms.size, ways: G.ways.length, hidden: G.secrets.length, between: G.secrets.length, within: G.passages.length + G.ways.length - G.rooms.size + 1, loops: G.passages.length + G.ways.length + G.secrets.length - G.rooms.size + 1, depth: Math.max(0, ...G.depth.values()) + 1 } : null;
-    return { ok, checks, errors: checks.filter(c => !c.ok).map(c => c.label + (c.detail ? ': ' + c.detail : '')), stats, loops: loopList };
+    return { ok, checks, errors: checks.filter(c => !c.ok && !c.soft).map(c => c.label + (c.detail ? ': ' + c.detail : '')), stats, loops: loopList };
   }
 }
 
-const api = { generate, validate, index, levelPath, KITS, LIMITS, ROLES };
+const api = { generate, validate, index, levelPath, deadEnds, twoEdge, rerouteLoops, KITS, LIMITS, ROLES };
 root.IsoGraph = api;
 if (typeof module !== 'undefined' && module && module.exports) module.exports = api;
 })(NS);
@@ -1078,22 +1337,97 @@ function dungeonLevel(rng, spec) {
     if (hFirst) { stepX(); stepY(); } else { stepY(); stepX(); }
     for (const [px, py] of path) if (!g[py][px]) g[py][px] = { h: 0, type: 'corridor', room: -1 };
   }
-  finishStairs(g, W, H);
+  // corridor heights follow the rooms they join, with a stair wherever a corridor
+  // meets a room at another height; a room the corridors still cannot reach on
+  // foot is levelled to its corridor and the stairs are worked out again
+  for (let pass = 0; pass < 7; pass++) {
+    if (pass === 6) {   // last resort: one floor height for the whole level
+      rooms.forEach((r, i) => { r.hgt = rooms[0].hgt; for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) if (g[y][x] && g[y][x].room === i) g[y][x].h = r.hgt; });
+    }
+    settleCorridors(g, W, H);
+    const L = { kind: 'dungeon', W, H, g, rooms }, seen = new Set(), cut = unreachedRooms(L, seen);
+    if (!cut.length) break;
+    for (const i of cut) {
+      // level the room to ground it touches that can be reached, else to its corridor
+      const r = rooms[i], reach = [], any = [];
+      for (let y = r.y - 1; y <= r.y + r.h; y++) for (let x = r.x - 1; x <= r.x + r.w; x++) { const c = g[y]?.[x]; if (c && c.room !== i && c.type !== 'stair') (seen.has(x + ',' + y) ? reach : any).push(c.h); }
+      const to = reach.length ? reach[0] : any.length ? any[0] : 0; r.hgt = to;
+      for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) if (g[y][x] && g[y][x].room === i) g[y][x].h = to;
+    }
+  }
   return { kind: 'dungeon', W, H, g, rooms };
 }
-// corridor cells entering a room of different height become stairs
-function finishStairs(g, W, H) {
-  const D = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+// Corridor networks take the height most of the rooms they touch share, then each
+// corridor cell that enters a room at another height becomes a stair.  A stair needs
+// level ground behind it (the corridor, or the room at the other end of a one-cell
+// gap) and no side branch, or its flight would leave a ledge.
+const LEVEL_EPS = 0.06;   // rooms carry a little height jitter; within this they count as level
+function settleCorridors(g, W, H) {
+  const D = [[1, 0], [-1, 0], [0, 1], [0, -1]], at = (x, y) => g[y]?.[x] || null, seen = new Set();
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const c0 = g[y][x]; if (c0 && c0.type === 'stair') { c0.type = 'corridor'; delete c0.top; delete c0.dir; }
+  }
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const c0 = g[y][x]; if (!c0 || c0.type !== 'corridor' || seen.has(x + ',' + y)) continue;
+    const comp = [], st = [[x, y]], votes = new Map(); seen.add(x + ',' + y);
+    while (st.length) {
+      const [cx, cy] = st.pop(); comp.push([cx, cy]);
+      for (const [dx, dy] of D) {
+        const n = at(cx + dx, cy + dy); if (!n) continue;
+        if (n.type === 'corridor' && !seen.has((cx + dx) + ',' + (cy + dy))) { seen.add((cx + dx) + ',' + (cy + dy)); st.push([cx + dx, cy + dy]); }
+        else if (n.type === 'floor') votes.set(n.h, (votes.get(n.h) || 0) + 1);
+      }
+    }
+    let base = 0, bv = -1; for (const [h, v] of votes) if (v > bv || (v === bv && Math.abs(h) < Math.abs(base))) { base = h; bv = v; }
+    for (const [cx, cy] of comp) g[cy][cx].h = base;
+  }
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const c = g[y][x]; if (!c || c.type !== 'corridor') continue;
     for (const [dx, dy] of D) {
-      const n = g[y + dy]?.[x + dx]; if (!n || n.type !== 'floor' || n.h === c.h) continue;
-      const o = g[y - dy]?.[x - dx]; if (!o || o.type !== 'corridor') continue;
+      const n = at(x + dx, y + dy); if (!n || n.type !== 'floor' || Math.abs(n.h - c.h) < LEVEL_EPS) continue;
+      const o = at(x - dx, y - dy); if (!o || !(o.type === 'corridor' || o.type === 'floor') || Math.abs(o.h - n.h) < LEVEL_EPS) continue;
+      // a side branch would be left at the wrong height, unless it is a parallel lane
+      // entering the same room, which becomes part of a wider flight
+      const lane = (sx, sy) => { const q = at(x + sx, y + sy), qn = at(x + sx + dx, y + sy + dy), qo = at(x + sx - dx, y + sy - dy); return q && qn && qo && qn.type === 'floor' && Math.abs(qn.h - n.h) < LEVEL_EPS && (qo.type === 'corridor' || qo.type === 'floor') && Math.abs(qo.h - o.h) < LEVEL_EPS; };
+      const side = [[dy, dx], [-dy, -dx]].some(([sx, sy]) => { const q = at(x + sx, y + sy); return q && (q.type === 'corridor' || q.type === 'stair') && !lane(sx, sy); });
+      if (side) continue;
       const lo = Math.min(n.h, o.h), hi = Math.max(n.h, o.h);
       c.type = 'stair'; c.h = lo; c.top = hi; c.dir = n.h > o.h ? [dx, dy] : [-dx, -dy];
       break;
     }
   }
+}
+// can you walk from cell (x,y) into its neighbour (x+dx,y+dy)?  Level ground, or along
+// a stair's flight; in caves a half-unit scramble between terraces is fine too
+function stepOK(L, x, y, dx, dy) {
+  const a = L.g[y]?.[x], b = L.g[y + dy]?.[x + dx];
+  if (!a || !b || a.type === 'lava' || b.type === 'lava') return false;
+  const exitH = (c, ex, ey) => {   // height at the edge of c facing (ex,ey); null if a stair has no opening there
+    if (c.type !== 'stair') return c.h;
+    if (ex === c.dir[0] && ey === c.dir[1]) return c.top;
+    if (ex === -c.dir[0] && ey === -c.dir[1]) return c.h;
+    return null;
+  };
+  const ha = exitH(a, dx, dy), hb = exitH(b, -dx, -dy);
+  if (ha == null || hb == null) return false;
+  if (L.kind === 'cave' && (a.type === 'water' || b.type === 'water')) return Math.abs(ha - hb) <= 1.4;   // a pool can be waded
+  return Math.abs(ha - hb) < LEVEL_EPS || (L.kind === 'cave' && Math.abs(ha - hb) <= 0.56);
+}
+// rooms that cannot be reached on foot from the first room
+function unreachedRooms(L, seen = new Set()) {
+  const { W, H, g } = L; let start = null;
+  for (let y = 0; y < H && !start; y++) for (let x = 0; x < W; x++) if (g[y][x] && g[y][x].room === 0 && g[y][x].type === 'floor') { start = [x, y]; break; }
+  if (!start) return [];
+  const st = [start]; seen.add(start + '');
+  while (st.length) {
+    const [x, y] = st.pop();
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const k = (x + dx) + ',' + (y + dy); if (!seen.has(k) && stepOK(L, x, y, dx, dy)) { seen.add(k); st.push([x + dx, y + dy]); } }
+  }
+  // a room counts as reached if any of its floor can be walked to (a cave zone may
+  // have an odd ledge or islet of its own)
+  const all = new Set(), hit = new Set();
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const c = g[y][x]; if (c && c.room >= 0 && c.type === 'floor') { all.add(c.room); if (seen.has(x + ',' + y)) hit.add(c.room); } }
+  return [...all].filter(r => !hit.has(r));
 }
 function caveLevel(rng, spec) {
   const { W, H } = spec; let m = grid(W, H).map((row, y) => row.map((_, x) => (x > 0 && y > 0 && x < W - 1 && y < H - 1 && rng.chance(spec.fill ?? 0.58)) ? 1 : 0));
@@ -2011,15 +2345,15 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
   // keep the ways in and out of the level clear
   for (const o of OUTS) { used.add(K(o.x, o.y)); used.add(o.axis === 'x' ? K(o.x - 1, o.y) : K(o.x, o.y - 1)); }
   for (const o of INS) { used.add(K(o.x, o.y)); used.add(o.axis === 'x' ? K(o.x + 1, o.y) : K(o.x, o.y + 1)); }
-  // hidden ways: a hatch in the floor of the room the graph names
-  const secretPts = [], secretAt = [];
-  for (const s of link.secrets || []) {
-    let c = s.cell && !used.has(K(s.cell.x, s.cell.y)) && g[s.cell.y]?.[s.cell.x]?.room === s.room && g[s.cell.y][s.cell.x].type === 'floor' ? [s.cell.x, s.cell.y] : null;
-    if (c) used.add(K(c[0], c[1])); else c = freeCell(roomCells[s.room] || []);
-    if (!c) continue;
-    placed.push({ x: c[0], y: c[1], item: 'hatch', opt: { lid: !isCave } });
-    secretPts.push({ tag: s.tag, end: s.end, p: I.P(c[0] + 0.5, c[1] + 0.5, g[c[1]][c[0]].h) });
-    secretAt.push(s);
+  // every arrival must be seen: walls on the view diagonal in front of its approach
+  // are cut down to stubs, and nothing tall is placed where its sight line runs low
+  const sightCut = new Set();
+  for (const o of INS) {
+    const sb = o.axis === 'x' ? sightBlockers(L, 'x', o.x, o.y, isCave ? 2.9 : WALLH) : sightBlockers(L, 'y', o.y, o.x, isCave ? 2.9 : WALLH);
+    for (const [x, y, d] of sb.walls) sightCut.add(x + ',' + y + ',' + d);
+    for (const k of sb.cells) used.add(k);
+    // and nothing tall between the viewer and the doorway itself
+    for (let k = 0; k <= 3; k++) for (const [i, j] of [[0, 0], [1, 0], [0, 1]]) used.add(K(o.x + k + i, o.y + k + j));
   }
   const graffitiSegs = new Set();
   const roles = spec.roles.slice();
@@ -2053,7 +2387,6 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
     info.webs = role.webs || 0;
     if (info.webs) info.feats.set('thick webs', 1);
   });
-  for (const s of secretAt) { const info = roomInfo[s.room]; if (info) info.feats = new Map([['hidden way ' + s.tag, 1], ...info.feats]); }
   // rails along corridors for mines
   const rails = spec.rails;
 
@@ -2227,6 +2560,7 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
     const z = c.h, t = 0.28, ruin = isSurface;
     let h = ruin ? Math.max(0.35, WALLH * (0.25 + 0.75 * Math.abs(fbm2(x * 0.5, y * 0.5, bseed + 9)))) : WALLH;
     if (floorBehind(x, y, dir)) h = Math.min(h, ruin ? 0.6 : 0.75 + 0.15 * hash2(x, y, bseed + 5));
+    if (sightCut.has(x + ',' + y + ',' + dir)) h = Math.min(h, WALL_STUB + 0.1 * hash2(x, y, bseed + 6));
     const box = dir === 'w' ? [x, y, z, x + t, y + 1, z + h] : [x, y, z, x + 1, y + t, z + h];
     if (dir === 'w') I.pen.fill(I.poly([[x + t, y, z], [x + t + 0.25, y + 0.08, z], [x + t + 0.25, y + 1, z], [x + t, y + 1, z]]), T.shadow, 0.18);
     else I.pen.fill(I.poly([[x, y + t, z], [x + 1, y + t, z], [x + 1.12, y + t + 0.12, z], [x + 0.12, y + t + 0.12, z]]), T.shadow, 0.1);
@@ -2247,6 +2581,7 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
         }
       }
     });
+    if (h < 1) return;   // a cut-down stub carries no torches, banners or scrawl
     if (graffitiSegs.has([x, y, dir].join(','))) graffiti(pen, dir === 'w' ? (u, v) => I.P(x + t + 0.004, y + u, z + v) : (u, v) => I.P(x + u, y + t + 0.004, z + v), 0.5, Math.min(h - 0.4, 1.1), prng, spec.graffitiWords);
     const wi = wallItems.get([x, y, dir].join(','));
     if (wi) { const F = dir === 'w' ? (u, v) => I.P(x + t + 0.005, y + u, z + v) : (u, v) => I.P(x + u, y + t + 0.005, z + v); WALL[wi].draw(I, F, prng); }
@@ -2262,7 +2597,7 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
   // world-space noise so neighbouring edges meet without seams
   function rockH(wx, wy, low) { const n = Math.abs(fbm2(wx * 0.55, wy * 0.55, bseed + 3)) + 0.25 * vnoise2(wx * 2.3, wy * 2.3, bseed + 4); return low ? 0.3 + 0.6 * n : 0.9 + 2.0 * n; }
   function rockWall(x, y, c, dir) {
-    const z = c.h, low = floorBehind(x, y, dir), n = 6, th = 0.38;
+    const z = c.h, low = floorBehind(x, y, dir) || sightCut.has(x + ',' + y + ',' + dir), n = 6, th = 0.38;
     const base = [], topF = [], topB = [];
     for (let i = 0; i <= n; i++) {
       const u = i / n, wx = dir === 'w' ? x : x + u, wy = dir === 'w' ? y + u : y, h = z + rockH(wx, wy, low);
@@ -2302,7 +2637,7 @@ function renderLevel(spec, theme, seed, scale, preL, link = {}) {
     let best = cells[0], bd = 1e9; for (const c of cells) { const d = (c[0] + 0.5 - cx) ** 2 + (c[1] + 0.5 - cy) ** 2; if (d < bd) { bd = d; best = c; } }
     labels.push({ room: i, p: I.P(best[0] + 0.5, best[1] + 0.5, g[best[1]][best[0]].h + 0.05) });
   });
-  return { pen, I, L, roomInfo, labels, inTag, inTags, secretPts };
+  return { pen, I, L, roomInfo, labels, inTag, inTags };
 }
 
 /* =====================================================================
@@ -3216,6 +3551,43 @@ function drawConnector(I, F, design, start, rng, opt = {}) {
    ===================================================================== */
 function genLayout(spec, seed) { const rng = new RNG(seed); const lr = rng.fork(); return spec.kind === 'cave' ? caveLevel(lr, spec) : dungeonLevel(lr, spec); }
 const walkable = c => c && (c.type === 'floor' || c.type === 'corridor');
+/* --- can the way into a back-wall doorway be seen? ----------------------
+   A doorway in a back wall is reached from behind the level, and the viewer
+   looks along world (1,1,1).  So anything standing on that diagonal in front of
+   the approach hides it: the next stretch of the same back wall, a higher floor,
+   a statue.  Rays are cast from points on the approach up the view diagonal; a
+   back wall or floor they pass behind is a blocker.  Works in the connector's
+   frame (a along the run, p across it).  Returns the walls (world x,y,dir) that
+   block, whether any higher floor blocks, and the cells the rays cross low down,
+   where nothing tall should stand.                                            */
+function sightBlockers(L, axis, a, p, wallH) {
+  const get = (A, P) => axis === 'x' ? L.g[P]?.[A] : L.g[A]?.[P], door = get(a, p);
+  const walls = new Map(), cells = new Set(); let floors = 0;
+  if (!door) return { walls: [], floors: 0, cells: [] };
+  const h0 = door.h;
+  const toXY = (A, P) => axis === 'x' ? [A, P] : [P, A], aEdge = axis === 'x' ? 'w' : 'n', pEdge = axis === 'x' ? 'n' : 'w';
+  for (const a0 of [a - 2.5, a - 1.75, a - 1, a - 0.35]) for (const p0 of [p + 0.2, p + 0.5, p + 0.8]) {
+    for (let t = 0.05; t < 4.5; t += 0.05) {
+      const A = a0 + t, P = p0 + t, Z = h0 + 0.35 + t, ca = Math.floor(A), cp = Math.floor(P);
+      if (ca === a && cp === p) continue;
+      const c = get(ca, cp); if (!c) continue;
+      const top = c.type === 'stair' ? Math.max(c.h, c.top) : c.h;
+      if (top > Z + 0.02) { floors++; break; }
+      if (Z < top + 1.6) { const [x, y] = toXY(ca, cp); cells.add(x + ',' + y); }
+      if (A - ca < 0.3 && !get(ca - 1, cp) && Z < c.h + wallH) { const [x, y] = toXY(ca, cp); walls.set(x + ',' + y + ',' + aEdge, [x, y, aEdge]); }
+      if (P - cp < 0.3 && !get(ca, cp - 1) && Z < c.h + wallH) { const [x, y] = toXY(ca, cp); walls.set(x + ',' + y + ',' + pEdge, [x, y, pEdge]); }
+    }
+  }
+  return { walls: [...walls.values()], floors, cells: [...cells] };
+}
+const WALL_STUB = 0.45;
+// 2: the approach is in plain view; 1: in view once the walls in the way are cut
+// down to stubs; 0: a higher floor hides it, so the doorway is not used if any other will do
+function sightOf(L, axis, a, p) {
+  const full = sightBlockers(L, axis, a, p, L.kind === 'cave' ? 2.9 : 2.1);
+  if (full.floors) return 0;
+  return full.walls.length ? 1 : 2;
+}
 function rowsOf(L, axis) {
   const AN = axis === 'x' ? L.W : L.H, PN = axis === 'x' ? L.H : L.W, get = (a, p) => axis === 'x' ? L.g[p]?.[a] : L.g[a]?.[p];
   const mx = [], mn = [];
@@ -3235,9 +3607,10 @@ function pickOut(L, axis, rng, excl) {
 function pickIn(L, axis, rng, excl) {
   const { PN, get, mn } = rowsOf(L, axis); const cand = []; let back = 1e9;
   for (let p = 0; p < PN; p++) { if (mn[p] > 1e8) continue; if (mn[p] <= back) cand.push({ a: mn[p], p }); back = Math.min(back, mn[p]); }
-  let ok = cand.filter(c => walkable(get(c.a, c.p)) && get(c.a + 1, c.p) && !(excl && excl.has(axis === 'x' ? c.a + ',' + c.p : c.p + ',' + c.a)));
+  let ok = cand.filter(c => walkable(get(c.a, c.p)) && walkable(get(c.a + 1, c.p)) && !(excl && excl.has(axis === 'x' ? c.a + ',' + c.p : c.p + ',' + c.a)));
   if (!ok.length) { ok = cand.slice(-1); const c = get(ok[0].a, ok[0].p); c.type = 'floor'; c.h = Math.max(c.h, 0); }
-  ok.forEach(c => { let fm = 1e9; for (let p = c.p + 1; p < PN; p++) if (mn[p] < 1e8) fm = Math.min(fm, mn[p]); c.score = (fm >= c.a - 0.5 ? 2 : 0) + rng.next(); });
+  ok.forEach(c => { c.sight = sightOf(L, axis, c.a, c.p); c.score = c.sight * 2 + rng.next(); });
+  if (ok.some(c => c.sight > 0)) ok = ok.filter(c => c.sight > 0);
   ok.sort((x, y) => y.score - x.score); const c = ok[0]; return { ...c, h: get(c.a, c.p).h };
 }
 function levelHull(L, spec, s) {
@@ -3534,6 +3907,36 @@ function ribbonTitle(pen, cx, cy, title, t, maxW) {
   return { bottom: Math.max(...ends.map(e => e.bot)), width: W + 2 * endW + 2 * notch };
 }
 
+// Give every id in an SVG string a prefix (and every reference to it).  Two
+// drawings on one page share ids like #paper; a browser resolves each reference
+// to the first, and when that one is hidden its filters and gradients go dark.
+function ownIds(svg, prefix) {
+  const ids = new Set(); svg.replace(/\sid="([^"]+)"/g, (m, id) => { ids.add(id); return m; });
+  if (!ids.size) return svg;
+  const esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), alt = [...ids].sort((a, b) => b.length - a.length).map(esc).join('|');
+  return svg.replace(new RegExp(`(\\sid=")(${alt})(")`, 'g'), `$1${prefix}$2$3`)
+            .replace(new RegExp(`url\\(#(${alt})\\)`, 'g'), `url(#${prefix}$1)`)
+            .replace(new RegExp(`(href=")#(${alt})(")`, 'g'), `$1#${prefix}$2$3`);
+}
+// Where the compass rose goes, from a graph's "compass" field:
+//   x, y   where its centre goes.  Values from 0 to 1 are fractions of the page
+//          (from the top left); larger values are page units, the numbers the
+//          drawing itself uses (the page size is in layout.page).  Giving x and y
+//          puts it there, whatever "place" says (except "none").
+//   place  without x and y: 'auto' (emptiest spot near the top right),
+//          'top-right', 'top-left', 'bottom-right', 'bottom-left' (emptiest spot
+//          near that corner of the page) or 'none'
+//   size   0.4–2, a scale on the usual size
+// Each drawn map records where the rose landed in "landed" (read only).
+const COMPASS_PLACES = ['auto', 'top-right', 'top-left', 'bottom-right', 'bottom-left', 'xy', 'none'];
+function compassSpec(c) {
+  const o = c && typeof c === 'object' ? c : {}, num = v => typeof v === 'number' && Number.isFinite(v) && v >= 0;
+  const x = num(o.x) ? o.x : null, y = num(o.y) ? o.y : null;
+  let place = COMPASS_PLACES.includes(o.place) ? o.place : 'auto';
+  if (place !== 'none' && x != null && y != null) place = 'xy';
+  if (place === 'xy' && (x == null || y == null)) place = 'auto';
+  return { place, x, y, size: num(o.size) ? Math.min(2, Math.max(0.4, o.size)) : 1 };
+}
 // eight-point compass rose lying on the isometric ground plane; north = −x
 function compassRose(pen, cx, cy, t, R = 100) {
   const G = (x, y) => [cx + (x - y) * C30, cy + (x + y) * 0.5];
@@ -3651,35 +4054,6 @@ function roomNear(L, x, y) {
   return -1;
 }
 
-/* --- hidden-way routing: a smooth curve through the open paper ---------- */
-function routeHidden(p1, p2, obstacles, own, box) {
-  const d = [p2[0] - p1[0], p2[1] - p1[1]], L = Math.hypot(d[0], d[1]) || 1, n = [-d[1] / L, d[0] / L];
-  const bez = (c1, c2) => { const pts = []; for (let i = 0; i <= 48; i++) { const t = i / 48, u = 1 - t; pts.push([u * u * u * p1[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * p2[0], u * u * u * p1[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * p2[1]]); } return pts; };
-  let best = null;
-  for (const o1 of [-0.9, -0.6, -0.35, -0.15, 0, 0.15, 0.35, 0.6, 0.9]) for (const k of [1, 0.4, -0.4]) {
-    const o2 = o1 * k;
-    const c1 = [p1[0] + d[0] * 0.3 + n[0] * o1 * L, p1[1] + d[1] * 0.3 + n[1] * o1 * L], c2 = [p1[0] + d[0] * 0.7 + n[0] * o2 * L, p1[1] + d[1] * 0.7 + n[1] * o2 * L];
-    const pts = bez(c1, c2); let score = 0, len = 0;
-    for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-    for (const q of pts.slice(3, -3)) {
-      for (const ob of obstacles) if (inPoly(q, ob.poly)) score += own.includes(ob.id) ? 0.5 : 12;
-      if (box && (q[0] < box.x0 || q[0] > box.x1 || q[1] < box.y0 || q[1] > box.y1)) score += 5;   // keep inside the drawing; don't grow the page
-    }
-    score += len * 0.02;
-    if (!best || score < best.score) best = { pts, score, len };
-  }
-  return best;
-}
-// a polyline as thin convex quads, so it can be an obstacle for legends
-function corridorPolys(pts, w = 10) {
-  const out = [];
-  for (let i = 0; i < pts.length - 1; i += 3) {
-    const a = pts[i], b = pts[Math.min(i + 3, pts.length - 1)], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, nx = -(b[1] - a[1]) / L * w, ny = (b[0] - a[0]) / L * w;
-    out.push([[a[0] + nx, a[1] + ny], [b[0] + nx, b[1] + ny], [b[0] - nx, b[1] - ny], [a[0] - nx, a[1] - ny]]);
-  }
-  return out;
-}
-
 /* --- legend boxes: the free space beside each level ---------------------- */
 const LEG = { W: 480, B: 18, LH: 24, EX: 16.5, EH: 21 };
 function placeLegends(boxes, heights, obstacles, U) {
@@ -3698,6 +4072,24 @@ function placeLegends(boxes, heights, obstacles, U) {
     if (!best) { const y0 = Math.max(U.y0, ...out.filter(q => q.x0 >= U.x1).map(q => q.y1 + 30)); best = { x0: U.x1 + 30, y0, x1: U.x1 + 30 + LW, y1: y0 + H }; }
     out.push(best);
   });
+  return out;
+}
+// Where the notes go: 'near' each level (above), in columns down the 'right' side
+// of the drawing, or on a separate 'page' (none on the map itself: nulls).
+function placeNotes(mode, boxes, heights, obstacles, U) {
+  if (mode === 'page') return heights.map(() => null);
+  if (mode === 'right') return placeRight(heights, U);
+  return placeLegends(boxes, heights, obstacles, U);
+}
+// columns to the right of the drawing, top to bottom, wrapping to a new column
+// when one would run much below the drawing
+function placeRight(heights, U, gap = 30) {
+  const colH = Math.max(U.y1 - U.y0, ...heights), out = [];
+  let x = U.x1 + 70, y = U.y0;
+  for (const h of heights) {
+    if (y > U.y0 && y + h > U.y0 + colH) { x += LEG.W + gap; y = U.y0; }
+    out.push({ x0: x, y0: y, x1: x + LEG.W, y1: y + h }); y += h + gap;
+  }
   return out;
 }
 const growRect = (U, r) => { U.x0 = Math.min(U.x0, r.x0); U.y0 = Math.min(U.y0, r.y0); U.x1 = Math.max(U.x1, r.x1); U.y1 = Math.max(U.y1, r.y1); };
@@ -3738,13 +4130,13 @@ function entryCands(L, axis, excl) {
   const { PN, get, mn } = rowsOf(L, axis), out = []; let back = 1e9;
   for (let p = 0; p < PN; p++) {
     if (mn[p] > 1e8) continue; const a = mn[p];
-    if (a <= back && walkable(get(a, p)) && get(a + 1, p) && !excl.has(cellKey(axis, a, p))) {
-      let fm = 1e9; for (let q = p + 1; q < PN; q++) if (mn[q] < 1e8) fm = Math.min(fm, mn[q]);
-      out.push({ a, p, h: get(a, p).h, clear: fm >= a - 0.5 });
+    if (a <= back && walkable(get(a, p)) && walkable(get(a + 1, p)) && !excl.has(cellKey(axis, a, p))) {
+      const sight = sightOf(L, axis, a, p);
+      out.push({ a, p, h: get(a, p).h, sight, clear: sight === 2 });
     }
     back = Math.min(back, a);
   }
-  return out;
+  return out.some(c => c.sight > 0) ? out.filter(c => c.sight > 0) : out;
 }
 const pRange = boxes => [Math.min(...boxes.map(b => b[1])), Math.max(...boxes.map(b => b[4]))];
 const runOf = d => d.segs.reduce((t, s) => t + s.run, 0);
@@ -3838,7 +4230,7 @@ function planLoopTier(ctx, s, fixedDir, tier, role) {
           const dx = (pe[0] + S[B][0] - ps[0] - S[A][0]) / (C30 * scale), v = (pe[1] + S[B][1] - ps[1] - S[A][1]) / scale, u = ax === 'x' ? dx : -dx;
           if (u < 1.5 || v < 1.2) continue;
           const xyO = ax === 'x' ? [out.a, out.p] : [out.p, out.a], xyI = ax === 'x' ? [inn.a, inn.p] : [inn.p, inn.a];
-          const rs = (roomNear(lay[A].L, ...xyO) === pref[A] ? 0 : 1.2) + (roomNear(lay[B].L, ...xyI) === pref[B] ? 0 : 1.2) + (inn.clear ? 0 : 1.5);
+          const rs = (roomNear(lay[A].L, ...xyO) === pref[A] ? 0 : 1.2) + (roomNear(lay[B].L, ...xyI) === pref[B] ? 0 : 1.2) + (inn.sight === 2 ? 0 : inn.sight === 1 ? 0.6 : 3);
           cands.push({ A, B, ax, F, out, inn, start, u, v, rank: rs + (u + v) * 0.04 + (role === 'oneway' && A !== s.from.level ? 1.5 : 0) + crng.next() * 0.3 });
         }
       }
@@ -4001,7 +4393,8 @@ function planGraph(graph, opt = {}) {
   }
 
   /* 3. loop ways still unbuilt get one more try now that every level is
-        placed; the rest stay hidden ways (a trapdoor and a dotted line) */
+        placed.  Any left are reported (metrics.unbuilt) so the forge can
+        reroute them; they are never drawn as anything but a real connector. */
   buildReady();
   const unbuilt = G.secrets.filter(s => !builtLoops.has(s.id));
   // painting order: levels and connectors sorted so every "before" holds
@@ -4012,53 +4405,31 @@ function planGraph(graph, opt = {}) {
 
   const levelPolys = G.order.map(id => ({ id, poly: shiftPoly(lay[id].hull, S[id]) }));
   const connPolys = conns.flatMap(c => c.segH.map(poly => ({ id: c.from, poly })));
-  const ends = s => [s.from, s.to].map(e => {
-    const lv = G.levels.get(e.level), gi = G.rooms.get(e.room).local, phys = lay[e.level].perm[gi], a = roomAnchor(lay[e.level].L, phys);
-    const p = Pw(a.x + 0.5, a.y + 0.5, a.h, scale);
-    return { level: e.level, room: e.room, phys, cell: a, P: [p[0] + S[e.level][0], p[1] + S[e.level][1]], depth: G.depth.get(lv.id) };
-  });
-  const box0 = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 }; levelPolys.forEach(o => growRect(box0, bboxOf(o.poly))); connPolys.forEach(o => growRect(box0, bboxOf(o.poly)));
-  const secrets = unbuilt.map(s => { const [a, b] = ends(s); return { edge: s, tag: s.id, a, b, route: routeHidden(a.P, b.P, levelPolys.concat(connPolys), [a.level, b.level], box0) }; });
-
   /* 4. estimated legends and page fill */
   const boxes = G.order.map(id => { const b = bboxOf(lay[id].hull); return { x0: b.x0 + S[id][0], y0: b.y0 + S[id][1], x1: b.x1 + S[id][0], y1: b.y1 + S[id][1] }; });
   const U = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 }; boxes.forEach(b => growRect(U, b)); connHulls.flat().forEach(h => growRect(U, bboxOf(h)));
-  const estH = G.order.map(id => { const lv = G.levels.get(id), k = conns.filter(c => c.from === id || c.to === id).length; return 118 + lv.rooms.length * 58 + 12 + (2 * k + 2 * secrets.filter(x => x.a.level === id || x.b.level === id).length) * LEG.EH; });
-  const obstacles = levelPolys.map(o => o.poly).concat(connHulls.flat(), secrets.flatMap(s => corridorPolys(s.route.pts)));
-  const legends = placeLegends(boxes, estH, obstacles, { ...U });
+  const estH = G.order.map(id => { const lv = G.levels.get(id), k = conns.filter(c => c.from === id || c.to === id).length; return 118 + lv.rooms.length * 58 + 12 + 2 * k * LEG.EH; });
+  const obstacles = levelPolys.map(o => o.poly).concat(connHulls.flat());
+  const notes = opt.notes || 'near', legends = placeNotes(notes, boxes, estH, obstacles, { ...U }).filter(Boolean);
   legends.forEach(r => growRect(U, r));
   const ink = levelPolys.reduce((t, o) => t + polyArea(o.poly), 0) + connHulls.flat().reduce((t, h) => t + polyArea(h), 0) + legends.reduce((t, r) => t + (r.x1 - r.x0) * (r.y1 - r.y0), 0);
   const metrics = pageFit(U, ink, aspect);
-  metrics.loops = G.secrets.length; metrics.built = G.secrets.length - unbuilt.length; metrics.rolesKept = conns.filter(c => c.loop && !c.design.roleMiss).length;
-  return { graph, G, salt, scale, aspect, lay, S, conns, secrets, drawOrder, metrics };
+  metrics.loops = G.secrets.length; metrics.built = G.secrets.length - unbuilt.length; metrics.unbuilt = unbuilt.map(s => s.id); metrics.rolesKept = conns.filter(c => c.loop && !c.design.roleMiss).length;
+  return { graph, G, salt, scale, aspect, notes, lay, S, conns, drawOrder, metrics };
 }
 
 /* --- inking the plan ----------------------------------------------------- */
-function dashedHand(pen, pts, w, o = {}) {
-  const dash = o.dash ?? 11, gap = o.gap ?? 7; let acc = 0, on = true, cur = [pts[0]];
-  for (let i = 1; i < pts.length; i++) {
-    let a = pts[i - 1]; const b = pts[i]; let seg = Math.hypot(b[0] - a[0], b[1] - a[1]);
-    while (seg > 0) {
-      const room = (on ? dash : gap) - acc, step = Math.min(room, seg), t = step / seg, m = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
-      if (on) cur.push(m);
-      acc += step; seg -= step; a = m;
-      if (acc >= (on ? dash : gap) - 1e-6) { if (on && cur.length > 1) pen.curve(cur, w, { amp: 0.3, opacity: o.opacity ?? 0.85, color: o.color }); on = !on; acc = 0; cur = [m]; }
-    }
-  }
-  if (on && cur.length > 1) pen.curve(cur, w, { amp: 0.3, opacity: o.opacity ?? 0.85, color: o.color });
-}
 const DOORS = { open: 'an open archway', closed: 'an oak door', portcullis: 'a portcullis', secret: 'a secret door', barred: 'an oak door barred on this side' };
 
 function renderGraph(plan, opt = {}) {
-  const { graph, G, lay, S, conns, secrets, scale, drawOrder } = plan;
+  const { graph, G, lay, S, conns, scale, drawOrder } = plan;
   const theme = Object.assign({}, THEME_BASE, opt.theme || {}), aspect = opt.aspect || plan.aspect;
   const crng = new RNG((((graph.seed >>> 0) * 2654435761) ^ 0x5bd1e995 ^ (plan.salt * 7919)) >>> 0 || 1);
   const num = G.number;
 
   /* links: what each level must leave room for */
-  const links = {}; G.order.forEach(id => links[id] = { outs: [], ins: [], secrets: [] });
+  const links = {}; G.order.forEach(id => links[id] = { outs: [], ins: [] });
   conns.forEach(c => { links[c.from].outs.push({ a: c.out.a, p: c.out.p, axis: c.axis, tag: c.tag }); links[c.to].ins.push({ a: c.inn.a, p: c.inn.p, axis: c.axis, door: c.design.door, tag: c.tag }); });
-  secrets.forEach(s => { for (const [e, end] of [[s.a, 'from'], [s.b, 'to']]) links[e.level].secrets.push({ tag: s.tag, room: e.phys, cell: e.cell, end }); });
 
   /* levels and connectors */
   const levels = {};
@@ -4070,15 +4441,8 @@ function renderGraph(plan, opt = {}) {
   const U = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 };
   groups.forEach(g => { const b = g.pen.bb; growRect(U, { x0: b.x0 + g.S[0], y0: b.y0 + g.S[1], x1: b.x1 + g.S[0], y1: b.y1 + g.S[1] }); });
 
-  /* hidden ways, re-routed from where the hatches really are */
   const levelPolys = G.order.map(id => ({ id, poly: shiftPoly(lay[id].hull, S[id]) }));
   const connPolys = conns.flatMap(c => c.segH.map(poly => ({ id: c.from, poly })));
-  const hidden = secrets.map(s => {
-    const P = e => { const q = levels[e.level].secretPts.find(t => t.tag === s.tag); return q ? [q.p[0] + S[e.level][0], q.p[1] + S[e.level][1]] : e.P; };
-    const a = P(s.a), b = P(s.b);
-    return { s, a, b, route: routeHidden(a, b, levelPolys.concat(connPolys), [s.a.level, s.b.level], U) };
-  });
-  hidden.forEach(h => h.route.pts.forEach(p => growRect(U, { x0: p[0], y0: p[1], x1: p[0], y1: p[1] })));
   const drawU = { ...U };
 
   /* legends */
@@ -4089,33 +4453,40 @@ function renderGraph(plan, opt = {}) {
     const ex = [], say = s => ex.push(...wrapPx(s, LEG.W - 20, LEG.EX, 'AlmendraItalic'));
     conns.filter(c => c.to === id).forEach(c => say(`${c.tag} ${c.loop ? 'arrives' : 'comes up'} from ${lvlName(c.from)}${c.loop ? `, ${ROLE_WORDS[c.role] || 'a second route'} that closes a loop,` : ''} through ${DOORS[c.design.doorLabel || c.design.door] || 'a doorway'}${c.design.oneway ? '; no climbing back' : ''}.`));
     conns.filter(c => c.from === id).forEach(c => say(`${c.tag} leads down to ${lvlName(c.to)}${c.loop ? ` (${(ROLE_WORDS[c.role] || 'a loop way').replace(/^an? /, '')})` : ''}: ${c.desc}`));
-    secrets.forEach(s => {
-      const e = s.edge, dir = s.b.depth > s.a.depth ? 'down' : s.b.depth < s.a.depth ? 'up' : 'across';
-      if (s.a.level === id) say(`${s.tag}, room ${roomNo[s.a.room]}: ${e.ifHidden || e.via || 'a hidden way'} ${e.oneWay ? 'drops' : 'leads'} ${dir} to ${lvlName(s.b.level)}, room ${roomNo[s.b.room]}${e.oneWay ? ' (one way)' : ''}.`);
-      if (s.b.level === id) say(`${s.tag}, room ${roomNo[s.b.room]}: ${e.ifHidden || e.via || 'a hidden way'} from ${lvlName(s.a.level)}, room ${roomNo[s.a.room]}${e.oneWay ? ', ends here; no climbing back' : ''}.`);
-    });
     const h = 118 + rows.reduce((t, r) => t + r.lines.length * LEG.LH + 10, 0) + (ex.length ? 12 + ex.length * LEG.EH : 0);
     return { id, lv, rows, ex, h };
   });
   const boxes = G.order.map(id => { const b = levels[id].pen.bb; return { x0: b.x0 + S[id][0], y0: b.y0 + S[id][1], x1: b.x1 + S[id][0], y1: b.y1 + S[id][1] }; });
-  const obstacles = levelPolys.map(o => o.poly).concat(connPolys.map(o => o.poly), hidden.flatMap(h => corridorPolys(h.route.pts)));
-  const legendPos = placeLegends(boxes, legend.map(l => l.h), obstacles, drawU);
-  legendPos.forEach(r => growRect(U, r));
+  const obstacles = levelPolys.map(o => o.poly).concat(connPolys.map(o => o.poly));
+  const notesMode = opt.notes || plan.notes || 'near';
+  const legendPos = placeNotes(notesMode, boxes, legend.map(l => l.h), obstacles, drawU), onMap = legendPos.filter(Boolean);
+  onMap.forEach(r => growRect(U, r));
 
-  /* compass rose: emptiest spot near the top right */
-  const CR = 100, CW = 2 * CR * C30 + 120, CHt = CR + 130; let comp = null;
-  for (let y = U.y0; y <= U.y1 - CHt; y += 25) for (let x = U.x0; x <= U.x1 - CW; x += 25) {
-    const r = { x0: x, y0: y, x1: x + CW, y1: y + CHt }, rp = rectPoly(r);
-    if (obstacles.some(o => polysOverlap(o, rp, 10))) continue;
-    if (legendPos.some(q => !(r.x1 + 10 < q.x0 || q.x1 + 10 < r.x0 || r.y1 + 10 < q.y0 || q.y1 + 10 < r.y0))) continue;
-    const score = Math.hypot(U.x1 - r.x1, (r.y0 - U.y0) * 1.4);
-    if (!comp || score < comp.score) comp = { ...r, score };
+  /* compass rose: graph.compass says where (see compassSpec); by default the
+     emptiest spot near the top right of the drawing */
+  const cs = compassSpec(opt.compass || graph.compass), CR = 100 * cs.size, CW = 2 * CR * C30 + 120 * cs.size, CHt = CR + 130 * cs.size; let comp = null;
+  const freeAt = r => { const rp = rectPoly(r); return !obstacles.some(o => polysOverlap(o, rp, 10)) && !onMap.some(q => !(r.x1 + 10 < q.x0 || q.x1 + 10 < r.x0 || r.y1 + 10 < q.y0 || q.y1 + 10 < r.y0)); };
+  if (cs.place === 'auto') {
+    for (let y = U.y0; y <= U.y1 - CHt; y += 25) for (let x = U.x0; x <= U.x1 - CW; x += 25) {
+      const r = { x0: x, y0: y, x1: x + CW, y1: y + CHt }; if (!freeAt(r)) continue;
+      const score = Math.hypot(U.x1 - r.x1, (r.y0 - U.y0) * 1.4);
+      if (!comp || score < comp.score) comp = { ...r, score };
+    }
   }
 
   /* page of the chosen shape, drawing centred in the map area */
-  const ink = levelPolys.reduce((t, o) => t + polyArea(o.poly), 0) + connPolys.reduce((t, o) => t + polyArea(o.poly), 0) + legendPos.reduce((t, r) => t + (r.x1 - r.x0) * (r.y1 - r.y0), 0);
+  const ink = levelPolys.reduce((t, o) => t + polyArea(o.poly), 0) + connPolys.reduce((t, o) => t + polyArea(o.poly), 0) + onMap.reduce((t, r) => t + (r.x1 - r.x0) * (r.y1 - r.y0), 0);
   const fit = pageFit(U, ink, aspect), pageW = fit.pageW, pageH = fit.pageH, { titleH, padB } = PAGE_FRAME;
   const tx = (pageW - (U.x1 - U.x0)) / 2 - U.x0, ty = titleH + 10 + Math.max(0, (pageH - titleH - 10 - padB - (U.y1 - U.y0)) / 2) - U.y0;
+  // a corner of the page: the empty spot in the map area nearest that corner
+  if (/^(top|bottom)-(left|right)$/.test(cs.place)) {
+    const right = cs.place.endsWith('right'), top = cs.place.startsWith('top'), X0 = 40, X1 = pageW - 40, Y0 = titleH + 10, Y1 = pageH - padB;
+    for (let y = Y0; y <= Y1 - CHt; y += 25) for (let x = X0; x <= X1 - CW; x += 25) {
+      const r = { x0: x - tx, y0: y - ty, x1: x + CW - tx, y1: y + CHt - ty }; if (!freeAt(r)) continue;   // tested in drawing coordinates
+      const score = Math.hypot(right ? X1 - (x + CW) : x - X0, (top ? y - Y0 : Y1 - (y + CHt)) * 1.4);
+      if (!comp || score < comp.score) comp = { ...r, score };
+    }
+  }
   const glowDefs = new Set(); let body = '';
   for (const g of groups) {
     const glowSvg = g.I.glows.map(([p, r, c]) => { glowDefs.add(c); return `<circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="${f1(r)}" fill="url(#glow-${c.replace('#', '')})"/>`; }).join('');
@@ -4123,43 +4494,41 @@ function renderGraph(plan, opt = {}) {
   }
   const ann = new Pen(new RNG(((graph.seed >>> 0) ^ 0x1234567) >>> 0 || 1), theme.ink);
   const T = p => [p[0] + tx, p[1] + ty];
-  const tagDiamond = (c, tag, dir, dashed) => { const q = [[c[0], c[1] - 13], [c[0] + 12, c[1]], [c[0], c[1] + 13], [c[0] - 12, c[1]]]; ann.fill(q, theme.paper); if (dashed) dashedHand(ann, q.concat([q[0]]), 1.4, { dash: 5, gap: 3, opacity: 1 }); else ann.outline(q, 1.4); ann.text(c[0], c[1] + 5, tag, { size: 14, weight: 'bold', cls: 'num' }); if (dir) ann.text(c[0] + 17, c[1] + 5, dir, { size: 14, anchor: 'start', weight: 'bold' }); };
-  // hidden ways first, so numbers and tags sit on top of them
-  hidden.forEach(h => {
-    const pts = h.route.pts.map(T);
-    dashedHand(ann, pts, 1.6, { color: theme.ink, opacity: 0.8 });
-    const mid = pts[24], dir = [pts[26][0] - pts[22][0], pts[26][1] - pts[22][1]], dl = Math.hypot(dir[0], dir[1]) || 1, u = [dir[0] / dl, dir[1] / dl], nn = [-u[1], u[0]];
-    if (h.s.edge.oneWay) { const tip = [mid[0] + u[0] * 9, mid[1] + u[1] * 9]; ann.line([tip[0] - u[0] * 11 + nn[0] * 6, tip[1] - u[1] * 11 + nn[1] * 6], tip, 1.6); ann.line([tip[0] - u[0] * 11 - nn[0] * 6, tip[1] - u[1] * 11 - nn[1] * 6], tip, 1.6); }
-    else { ann.ellipse(mid, 10, 10, 1.1, { fill: theme.paper }); ann.text(mid[0], mid[1] + 4.5, h.s.tag, { size: 12, italic: true, cls: 'num' }); }
-  });
+  const tagDiamond = (c, tag, dir) => { const q = [[c[0], c[1] - 13], [c[0] + 12, c[1]], [c[0], c[1] + 13], [c[0] - 12, c[1]]]; ann.fill(q, theme.paper); ann.outline(q, 1.4); ann.text(c[0], c[1] + 5, tag, { size: 14, weight: 'bold', cls: 'num' }); if (dir) ann.text(c[0] + 17, c[1] + 5, dir, { size: 14, anchor: 'start', weight: 'bold' }); };
   for (const id of G.order) {
     const L = levels[id], s = S[id];
     for (const lb of L.labels) { const info = L.roomInfo[lb.room]; const c = T([lb.p[0] + s[0], lb.p[1] + s[1]]); ann.ellipse(c, 11, 11, 1.4, { fill: theme.paper }); ann.text(c[0], c[1] + 5, String(info.n), { size: 14, weight: 'bold', cls: 'num' }); }
     for (const it of L.inTags || []) if (it.p) tagDiamond(T([it.p[0] + s[0], it.p[1] + s[1] - 16]), it.tag, '↑');
   }
   conns.forEach(c => { if (c.tagTop) tagDiamond(T([c.tagTop[0] + S[c.from][0], c.tagTop[1] + S[c.from][1] - 16]), c.tag, '↓'); });
-  hidden.forEach(h => { const dn = h.s.b.depth > h.s.a.depth, up = h.s.b.depth < h.s.a.depth; tagDiamond(T([h.a[0], h.a[1] - 22]), h.s.tag, dn ? '↓' : up ? '↑' : '→', true); tagDiamond(T([h.b[0], h.b[1] - 22]), h.s.tag, dn ? '↑' : up ? '↓' : '←', true); });
-  legend.forEach((Lg, i) => {
-    const lp = legendPos[i], lx = lp.x0 + tx, ly = lp.y0 + ty;
-    banner(ann, lx + LEG.W / 2, ly + 24, LEG.W - 40, lvlName(Lg.id), theme);
-    ann.text(lx + LEG.W / 2, ly + 74, Lg.lv.name, { size: 27, cls: 'title' });
+  // one level's notes: banner, level name, numbered rooms, then the ways in and out
+  const drawNotes = (pen, Lg, lx, ly) => {
+    banner(pen, lx + LEG.W / 2, ly + 24, LEG.W - 40, lvlName(Lg.id), theme);
+    pen.text(lx + LEG.W / 2, ly + 74, Lg.lv.name, { size: 27, cls: 'title' });
     let yy = ly + 114;
-    for (const r of Lg.rows) { ann.ellipse([lx + 15, yy - 6], 12, 12, 1.2, { fill: theme.paper }); ann.text(lx + 15, yy - 1, String(r.n), { size: 13, weight: 'bold', cls: 'num' }); r.lines.forEach((ln, k) => ann.text(lx + 36, yy + k * LEG.LH, ln, { size: LEG.B, anchor: 'start' })); yy += r.lines.length * LEG.LH + 10; }
-    yy += 12; Lg.ex.forEach((ln, k) => ann.text(lx + 10, yy + k * LEG.EH, ln, { size: LEG.EX, anchor: 'start', italic: true, cls: 'title2' }));
-  });
-  const ribbonTotal = comp ? pageW - 140 : pageW - 2 * (CW + 50);
+    for (const r of Lg.rows) { pen.ellipse([lx + 15, yy - 6], 12, 12, 1.2, { fill: theme.paper }); pen.text(lx + 15, yy - 1, String(r.n), { size: 13, weight: 'bold', cls: 'num' }); r.lines.forEach((ln, k) => pen.text(lx + 36, yy + k * LEG.LH, ln, { size: LEG.B, anchor: 'start' })); yy += r.lines.length * LEG.LH + 10; }
+    yy += 12; Lg.ex.forEach((ln, k) => pen.text(lx + 10, yy + k * LEG.EH, ln, { size: LEG.EX, anchor: 'start', italic: true, cls: 'title2' }));
+  };
+  legend.forEach((Lg, i) => { const lp = legendPos[i]; if (lp) drawNotes(ann, Lg, lp.x0 + tx, lp.y0 + ty); });
+  // where the compass ends up: an empty spot found above, else the chosen corner of
+  // the page itself, else exactly where graph.compass puts it
+  const cornerAt = c => [c.endsWith('left') ? CW / 2 + 30 : pageW - CW / 2 - 30, c.startsWith('top') ? 140 : pageH - padB - CHt / 2];
+  const toPage = (v, W) => Math.min(W - 40, Math.max(40, v <= 1 ? v * W : v));   // fraction or page units, kept on the sheet
+  const compAt = cs.place === 'none' ? null : cs.place === 'xy' ? [toPage(cs.x, pageW), toPage(cs.y, pageH)] : comp ? [(comp.x0 + comp.x1) / 2 + tx, (comp.y0 + comp.y1) / 2 + ty] : cornerAt(cs.place === 'auto' ? 'top-right' : cs.place);
+  const compTop = !!compAt && compAt[1] - CHt / 2 < titleH - 20;   // a compass in the title band narrows the ribbon
+  const ribbonTotal = compTop ? pageW - 2 * (CW + 50) : pageW - 140;
   const rib = ribbonTitle(ann, pageW / 2, 118, opt.title || graph.title || 'Untitled Dungeon', theme, Math.max(520, ribbonTotal - 348));
   const sub = opt.subtitle ?? graph.subtitle;
   if (sub) ann.text(pageW / 2, rib.bottom + 34, sub, { size: 21, italic: true, cls: 'title2' });
-  if (comp) compassRose(ann, (comp.x0 + comp.x1) / 2 + tx, (comp.y0 + comp.y1) / 2 + ty, theme, CR);
-  else compassRose(ann, pageW - CW / 2 - 30, 140, theme, CR * 0.9);
-  ann.text(pageW / 2, pageH - 50, opt.footer || 'Each level is a cutaway slice of earth; front walls removed. One flagstone is about 5 ft. Lettered diamonds mark where each way between levels starts (↓) and arrives (↑); loop ways close the loops as alternative routes, shortcuts, dangerous paths or one-way drops.', { size: 15, italic: true, cls: 'title2' });
+  if (compAt) compassRose(ann, compAt[0], compAt[1], theme, comp || cs.place === 'xy' ? CR : CR * 0.9);
+  ann.text(pageW / 2, pageH - 50, opt.footer || 'Each level is a cutaway slice of earth; front walls removed. One flagstone is about 5 ft. Lettered diamonds mark where each way between levels starts (↓) and arrives (↑); loop ways close the loops as alternative routes, shortcuts, dangerous paths or one-way drops.' + (notesMode === 'page' ? ' The notes for each level are on the Notes page.' : ''), { size: 15, italic: true, cls: 'title2' });
   // fine print: the map's licence (CC0), also recorded in the SVG metadata below
   if (opt.license !== false) ann.text(pageW / 2, pageH - 31, opt.license || MAP_LICENSE.line, { size: 10.5, italic: true, cls: 'title2' });
   const glowGrad = [...glowDefs, theme.glow].map(c => `<radialGradient id="glow-${c.replace('#', '')}"><stop offset="0" stop-color="${c}" stop-opacity="0.9"/><stop offset="0.35" stop-color="${c}" stop-opacity="0.45"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join('');
   const defs = groups.map(g => g.pen.defs.join('')).join('') + ann.defs.join('');
   const ink0 = theme.ink;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${pageW} ${pageH}" width="${pageW}" height="${pageH}">
+  // the parchment sheet: frame, paper texture, fonts and licence around a drawing
+  const sheet = (W, H, defsStr, inner) => `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
 ${opt.license === false ? '' : MAP_LICENSE.metadata(opt.title || graph.title || 'Dungeon map')}
 <defs>
 <style>${opt.embedFonts === false ? '' : (fontsApi()?.css || '')}
@@ -4168,16 +4537,32 @@ ${opt.license === false ? '' : MAP_LICENSE.metadata(opt.title || graph.title || 
 <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.3  0 0 0 0 0.22  0 0 0 0 0.12  0 0 0 0.35 -0.08"/></filter>
 <filter id="inkbleed" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.3" xChannelSelector="R" yChannelSelector="G"/></filter>
 <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="0.6" stop-color="#5a3a1a" stop-opacity="0"/><stop offset="1" stop-color="#5a3a1a" stop-opacity="0.35"/></radialGradient>
-${glowGrad}${defs}
+${defsStr}
 </defs>
 <rect width="100%" height="100%" fill="${theme.paper}"/>
 <rect width="100%" height="100%" filter="url(#paper)" opacity="0.55"/>
 <rect width="100%" height="100%" filter="url(#grain)" opacity="0.5"/>
-${body}
-${ann.take()}
+${inner}
 <rect width="100%" height="100%" fill="url(#vig)"/>
-<rect x="14" y="14" width="${pageW - 28}" height="${pageH - 28}" fill="none" stroke="${ink0}" stroke-width="2.2"/><rect x="21" y="21" width="${pageW - 42}" height="${pageH - 42}" fill="none" stroke="${ink0}" stroke-width="0.8"/>
+<rect x="14" y="14" width="${W - 28}" height="${H - 28}" fill="none" stroke="${ink0}" stroke-width="2.2"/><rect x="21" y="21" width="${W - 42}" height="${H - 42}" fill="none" stroke="${ink0}" stroke-width="0.8"/>
 </svg>`;
+  const svg = sheet(pageW, pageH, glowGrad + defs, body + '\n' + ann.take());
+
+  /* notes on their own page: the same sheet and title, the levels' notes in columns */
+  let notesSvg = null;
+  if (notesMode === 'page') {
+    const annN = new Pen(new RNG(((graph.seed >>> 0) ^ 0x7654321) >>> 0 || 1), theme.ink);
+    // up to three columns (fewer for one or two levels), the page sized to the notes
+    const gap = 40, padX = 80, nc = Math.min(3, legend.length), totalW = nc * LEG.W + (nc - 1) * gap, NW = Math.max(PAGE_FRAME.minW, totalW + 2 * padX), x0 = (NW - totalW) / 2;
+    const colY = Array(nc).fill(titleH + 10), at = legend.map(Lg => { const c = colY.indexOf(Math.min(...colY)), r = [x0 + c * (LEG.W + gap), colY[c]]; colY[c] += Lg.h + 30; return r; });
+    const NH = Math.ceil(Math.max(...colY) + padB + 10);
+    const ribN = ribbonTitle(annN, NW / 2, 118, opt.title || graph.title || 'Untitled Dungeon', theme, Math.max(520, NW - 140 - 348));
+    annN.text(NW / 2, ribN.bottom + 34, 'Notes on the rooms and the ways between levels', { size: 21, italic: true, cls: 'title2' });
+    legend.forEach((Lg, i) => drawNotes(annN, Lg, at[i][0], at[i][1]));
+    annN.text(NW / 2, NH - 50, 'Room numbers and lettered ways (↓ starts, ↑ arrives) match the map.', { size: 15, italic: true, cls: 'title2' });
+    if (opt.license !== false) annN.text(NW / 2, NH - 31, opt.license || MAP_LICENSE.line, { size: 10.5, italic: true, cls: 'title2' });
+    notesSvg = ownIds(sheet(NW, NH, annN.defs.join(''), annN.take()), 'np-');
+  }
 
   /* the graph as built: room numbers, which rooms the ways landed in, the layout salt */
   const resolved = JSON.parse(JSON.stringify(graph));
@@ -4187,15 +4572,28 @@ ${ann.take()}
   const inv = id => { const p = lay[id].perm, m = []; p.forEach((ph, gi) => m[ph] = gi); return m; };
   resolved.edges.forEach(e => {
     if (e.kind !== 'way' && e.kind !== 'loop' && e.kind !== 'secret') return; const c = conns.find(k => k.tag === e.id);
-    if (!c) { e.resolved = { built: false, drawn: 'hidden way (no room to build a connector on this page)' }; return; }
+    if (!c) { e.resolved = { built: false, drawn: 'left off the map: no room for its connector on this page' }; return; }
     const at = (id, cell, axis) => { const xy = axis === 'x' ? [cell.a, cell.p] : [cell.p, cell.a], ph = roomNear(lay[id].L, xy[0], xy[1]); return ph >= 0 ? G.levels.get(id).rooms[inv(id)[ph]] : null; };
     e.resolved = { built: true, fromLevel: c.from, toLevel: c.to, fromRoom: at(c.from, c.out, c.axis), toRoom: at(c.to, c.inn, c.axis), build: c.design.tpl, parts: c.design.segs.map(x => x.label ? x.kind + ' (' + x.label + ')' : x.kind), door: c.design.doorLabel || c.design.door };
     if (c.loop) { e.resolved.role = c.role; e.resolved.roleKept = !c.design.roleMiss; if (c.design.oneway) e.resolved.oneWay = true; if (c.design.oneway && e.from && e.from.level !== c.from) { const t = e.from; e.from = e.to; e.to = t; } }
   });
-  return { svg, metrics: fit, resolved, roomNo };
+  // what was asked for, plus where the rose actually landed (fractions and page units)
+  const asked = graph.compass && typeof graph.compass === 'object' ? graph.compass : {};
+  resolved.compass = { place: cs.place === 'xy' ? 'xy' : (asked.place && COMPASS_PLACES.includes(asked.place) ? asked.place : 'auto'), size: cs.size, ...(cs.place === 'xy' ? { x: cs.x, y: cs.y } : {}),
+    ...(compAt ? { landed: { x: +(compAt[0] / pageW).toFixed(3), y: +(compAt[1] / pageH).toFixed(3), pageX: Math.round(compAt[0]), pageY: Math.round(compAt[1]) } } : {}) };
+  resolved.layout.page.width = pageW; resolved.layout.page.height = pageH;
+  return { svg, notesSvg, metrics: fit, resolved, roomNo };
 }
 
-const api = { renderDungeon, planGraph, renderGraph, PAGES, FILL_TARGET, RNG, ITEMS, WALL, ROLES, THEME_BASE, CONN_TEMPLATES, TEMPLATE_NAMES, ROLE_WORDS, OCCUPANTS, occupantPool, Pen, Iso };
+// what a party on foot would meet: rooms they cannot reach, and doorways whose
+// approach is hidden (sight 0), shown once walls are cut down (1) or plain (2)
+function groundCheck(plan) {
+  const lost = [], doors = { 2: 0, 1: 0, 0: 0 }, hidden = [];
+  for (const id of plan.G.order) { const L = plan.lay[id].L, n = unreachedRooms(L).length; if (n) lost.push({ level: plan.G.number.get(id), n }); }
+  for (const c of plan.conns) { const k = sightOf(plan.lay[c.to].L, c.axis, c.inn.a, c.inn.p); doors[k]++; if (!k) hidden.push(c.tag); }
+  return { lost, doors, hidden };
+}
+const api = { groundCheck, renderDungeon, planGraph, renderGraph, PAGES, FILL_TARGET, RNG, ITEMS, WALL, ROLES, THEME_BASE, CONN_TEMPLATES, TEMPLATE_NAMES, ROLE_WORDS, OCCUPANTS, occupantPool, Pen, Iso };
 root.IsoDungeon = api;
 if (typeof module !== 'undefined' && module && module.exports) module.exports = api;
 })(NS);
@@ -4260,7 +4658,7 @@ function fit(graph, opt = {}) {
   let best = null, lastErr = null;
   for (const salt of salts) {
     if (best && opt.deadline && Date.now() > opt.deadline && best.metrics.built === best.metrics.loops) break;
-    let plan; try { plan = ID.planGraph(graph, { salt, aspect: opt.aspect }); } catch (e) { lastErr = e; continue; }
+    let plan; try { plan = ID.planGraph(graph, { salt, aspect: opt.aspect, notes: opt.notes }); } catch (e) { lastErr = e; continue; }
     if (!best || better(plan, best)) best = plan;
     if (accepted(plan, target)) break;
   }
@@ -4268,8 +4666,34 @@ function fit(graph, opt = {}) {
   return { ok: accepted(best, target), plan: best, target };
 }
 
+// Every loop way must be a real connector.  The loop ways a plan could not build
+// are rerouted between the nearest levels not yet tried, round by round, and the
+// changed graph is fitted afresh; any still without room are taken out at last.
+function repairLoops(graph, plan, opt, attempts, until = Infinity) {
+  const rerouted = [], dropped = [], avoid = new Set(), ends = (g, id) => { const e = g.edges.find(x => x.id === id); return e && e.from ? `${e.from.level}–${e.to.level}` : null; };
+  let g = graph;
+  for (let round = 1; round <= 6 && plan.metrics.built < plan.metrics.loops && Date.now() < until; round++) {
+    const failed = plan.metrics.unbuilt.slice(), g2 = IG.rerouteLoops(g, failed, round, avoid), v2 = IG.validate(g2);
+    if (!v2.ok) { attempts.push({ variant: g.variant, stage: 'reroute', ok: false, note: v2.errors.join('; ') }); continue; }
+    const f2 = fit(g2, { ...opt, deadline: null });
+    attempts.push({ variant: g.variant, stage: 'reroute', ok: f2.ok, fill: f2.plan && f2.plan.metrics.fill, built: f2.plan && f2.plan.metrics.built, note: f2.error || '' });
+    if (!f2.plan) continue;
+    for (const id of failed) { const was = ends(g, id), now = ends(g2, id), k = rerouted.findIndex(x => x.id === id); if (k >= 0) rerouted[k].to = now; else rerouted.push({ id, from: was, to: now }); }
+    g = g2; plan = f2.plan;
+  }
+  for (let k = 0; k < 4 && plan.metrics.built < plan.metrics.loops; k++) {
+    const out = plan.metrics.unbuilt.slice(), g2 = JSON.parse(JSON.stringify(g)); g2.edges = g2.edges.filter(e => !out.includes(e.id)); delete g2.layout;
+    if (!IG.validate(g2).ok) break;
+    const f2 = fit(g2, { ...opt, deadline: null }); if (!f2.plan) break;
+    dropped.push(...out); g = g2; plan = f2.plan;
+  }
+  for (const x of rerouted) x.to = ends(g, x.id);   // an id freed in one round may be reused in a later one
+  return { graph: g, plan, rerouted: rerouted.filter(x => !dropped.includes(x.id) && x.to !== x.from), dropped };
+}
+const pocketsIn = g => { try { return IG.deadEnds(g).rooms.size; } catch (e) { return 0; } };
+
 function forge(opt) {
-  const attempts = []; let best = null;
+  const attempts = [], tried = []; let best = null;
   opt = { ...opt, deadline: Date.now() + (opt.budgetMs ?? 3000) };   // after this, settle for the best plan that builds every loop
   for (let variant = 0; variant < (opt.maxGraphs ?? 8); variant++) {
     const graph = IG.generate({ ...opt, variant });
@@ -4277,13 +4701,29 @@ function forge(opt) {
     if (!v.ok) { attempts.push({ variant, stage: 'structure', ok: false, note: v.errors.join('; ') }); continue; }
     const f = fit(graph, opt);
     attempts.push({ variant, stage: 'page', ok: f.ok, fill: f.plan && f.plan.metrics.fill, built: f.plan && f.plan.metrics.built, note: f.error || '' });
+    if (f.plan) tried.push({ graph, v, plan: f.plan, ok: f.ok });
     if (f.plan && (!best || better(f.plan, best.plan))) best = { graph, v, plan: f.plan, ok: f.ok };
     if (f.ok) break;
     if (best && Date.now() > opt.deadline && best.plan.metrics.built === best.plan.metrics.loops) break;
   }
   if (!best) throw new Error('no graph could be fitted on the page: ' + attempts.map(a => a.note).filter(Boolean).slice(-1)[0]);
+  let rerouted = [], dropped = [];
+  if (best.plan.metrics.built < best.plan.metrics.loops) {
+    // reroute the best variant's missing loop ways; with no dead ends asked for, a
+    // variant whose repair leaves a pocket gives way to the next best (up to three)
+    tried.sort((a, b) => better(a.plan, b.plan) ? -1 : better(b.plan, a.plan) ? 1 : 0);
+    let first = null; const until = Date.now() + (opt.repairMs ?? (opt.deadEnds === 'none' ? 45000 : 20000));   // keep the wait bounded
+    for (const t of tried.slice(0, opt.deadEnds === 'none' ? 3 : 1)) {
+      if (first && Date.now() > until) break;
+      const r = repairLoops(t.graph, t.plan, opt, attempts, until);
+      if (!first) first = r;
+      if (opt.deadEnds !== 'none' || !pocketsIn(r.graph)) { first = r; break; }
+    }
+    best = { graph: first.graph, v: IG.validate(first.graph), plan: first.plan, ok: accepted(first.plan, opt.target ?? ID.FILL_TARGET) };
+    rerouted = first.rerouted; dropped = first.dropped;
+  }
   best.graph.layout = { salt: best.plan.salt };
-  return { ...best, attempts, target: opt.target ?? ID.FILL_TARGET };
+  return { ...best, attempts, rerouted, dropped, target: opt.target ?? ID.FILL_TARGET };
 }
 
 // a graph the user wrote or edited: validate it, then fit it as it stands
@@ -4297,11 +4737,109 @@ function fromJSON(graph, opt = {}) {
 root.IsoForge = { fit, forge, fromJSON, themeOf };
 })(NS);
 
+/* =====================================================================
+   CONNECTION MATRIX
+   The graph seen as a table: rooms down the side and across the top, grouped
+   by level.  A cell is the link between its row room and column room: inside a
+   level's block it is a passage, outside it a loop way with a role.  A smaller
+   level × level table holds the ways down, which join levels, not rooms (the
+   planner picks their doorways).  These functions only edit graph data; the
+   page controller draws the table and redraws the map.
+   ===================================================================== */
+(function (root) {
+const IG = root.IsoGraph;
+const clone = g => JSON.parse(JSON.stringify(g));
+// what a click in a cell between levels steps through, from row room to column room
+const LOOP_STATES = ['', 'alternative', 'dangerous', 'shortcut', 'oneway>', 'oneway<'];
+const roomsInOrder = g => {
+  const G = IG.index(g), order = G.order.length === G.levels.size ? G.order : [...G.levels.keys()];
+  return order.flatMap(id => G.levels.get(id).rooms.map((rid, k) => ({ id: rid, level: id, levelNo: (G.number.get(id) || (G.levels.get(id).idx + 1)), k: k + 1, role: G.rooms.get(rid).role })));
+};
+const levelsInOrder = g => {
+  const G = IG.index(g), order = G.order.length === G.levels.size ? G.order : [...G.levels.keys()];
+  return order.map(id => ({ id, no: G.number.get(id) || (G.levels.get(id).idx + 1), name: G.levels.get(id).name, kind: G.levels.get(id).kind }));
+};
+const isLoop = e => e.kind === 'loop' || e.kind === 'secret';
+const between = (e, a, b) => isLoop(e) && e.from && e.to && ((e.from.room === a && e.to.room === b) || (e.from.room === b && e.to.room === a));
+const joins = (e, a, b) => e.kind === 'passage' && ((e.a === a && e.b === b) || (e.a === b && e.b === a));
+// the state of the cell (row a, column b)
+function cellState(g, a, b) {
+  const R = new Map(g.rooms.map(r => [r.id, r]));
+  if (a === b || !R.has(a) || !R.has(b)) return { kind: 'none' };
+  if (R.get(a).level === R.get(b).level) { const e = g.edges.find(x => joins(x, a, b)); return e ? { kind: 'passage', edge: e } : { kind: 'empty', same: true }; }
+  const e = g.edges.find(x => between(x, a, b));
+  if (!e) return { kind: 'empty', same: false };
+  const one = e.oneWay || e.role === 'oneway';
+  return { kind: 'loop', edge: e, state: one ? (e.from.room === a ? 'oneway>' : 'oneway<') : (e.role || 'alternative') };
+}
+function freeId(g, base) {
+  const used = new Set([...g.levels, ...g.rooms, ...g.edges].map(x => x.id));
+  if (base === 'p') { let n = 1; while (used.has('p' + n)) n++; return 'p' + n; }
+  for (let i = 0; i < 26 * 27; i++) { const id = i < 26 ? String.fromCharCode(65 + i) : String.fromCharCode(64 + Math.floor(i / 26)) + String.fromCharCode(65 + i % 26); if (!used.has(id)) return id; }
+  return 'X' + Date.now();
+}
+// step the cell (row a, column b) to its next state (dir -1 steps back)
+function cycleCell(g0, a, b, dir = 1) {
+  const g = clone(g0), R = new Map(g.rooms.map(r => [r.id, r]));
+  if (a === b || !R.has(a) || !R.has(b)) return g0;
+  const ra = R.get(a), rb = R.get(b);
+  if (ra.level === rb.level) {
+    const i = g.edges.findIndex(x => joins(x, a, b));
+    if (i >= 0) g.edges.splice(i, 1); else g.edges.push({ id: freeId(g, 'p'), kind: 'passage', a, b });
+    return g;
+  }
+  const cur = cellState(g, a, b), k = cur.kind === 'loop' ? LOOP_STATES.indexOf(cur.state) : 0;
+  const next = LOOP_STATES[(k + dir + LOOP_STATES.length) % LOOP_STATES.length];
+  const i = g.edges.findIndex(x => between(x, a, b)), old = i >= 0 ? g.edges[i] : null;
+  if (!next) { if (i >= 0) g.edges.splice(i, 1); return g; }
+  const one = next.startsWith('oneway'), [f, t] = next === 'oneway<' ? [rb, ra] : [ra, rb];
+  const e = old || { id: freeId(g, 'L'), kind: 'loop' };
+  e.role = one ? 'oneway' : next; e.from = { level: f.level, room: f.id }; e.to = { level: t.level, room: t.id };
+  if (one) e.oneWay = true; else delete e.oneWay;
+  if (!old) g.edges.push(e);
+  delete e.resolved;
+  return g;
+}
+// toggle the way down from level A to level B
+function toggleWay(g0, A, B) {
+  if (A === B) return g0;
+  const g = clone(g0), i = g.edges.findIndex(e => e.kind === 'way' && e.from && e.to && ((e.from.level === A && e.to.level === B) || (e.from.level === B && e.to.level === A)));
+  if (i >= 0) g.edges.splice(i, 1); else g.edges.push({ id: freeId(g, 'W'), kind: 'way', from: { level: A }, to: { level: B } });
+  return g;
+}
+function addRoom(g0, level) {
+  const g = clone(g0), mine = g.rooms.filter(r => r.level === level);
+  let k = mine.length + 1; while (g.rooms.some(r => r.id === `${level}.${k}`)) k++;
+  const role = mine.length ? mine[mine.length - 1].role : 'storage', id = `${level}.${k}`;
+  g.rooms.push({ id, level, role });
+  // a new room starts joined to the last room of its level, so the level stays in one piece
+  if (mine.length) g.edges.push({ id: freeId(g, 'p'), kind: 'passage', a: mine[mine.length - 1].id, b: id });
+  return g;
+}
+function removeRoom(g0, id) {
+  const g = clone(g0);
+  g.rooms = g.rooms.filter(r => r.id !== id);
+  g.edges = g.edges.filter(e => !(e.a === id || e.b === id || (e.from && e.from.room === id) || (e.to && e.to.room === id)));
+  return g;
+}
+// dead ends for shading: use the rooms the drawn ways actually reached, where the
+// edited graph still has those ways
+function pockets(g, resolved) {
+  const h = clone(g);
+  if (resolved && Array.isArray(resolved.edges)) for (const w of h.edges) if (w.kind === 'way') {
+    const r = resolved.edges.find(x => x.id === w.id && x.kind === 'way' && x.from.level === w.from.level && x.to.level === w.to.level);
+    if (r && r.resolved && h.rooms.some(q => q.id === r.resolved.fromRoom) && h.rooms.some(q => q.id === r.resolved.toRoom)) w.resolved = r.resolved;
+  }
+  try { return IG.deadEnds(h); } catch (e) { return { rooms: new Set(), pockets: [], exact: false }; }
+}
+root.IsoMatrix = { LOOP_STATES, roomsInOrder, levelsInOrder, cellState, cycleCell, toggleWay, addRoom, removeRoom, pockets };
+})(NS);
+
 /* IsoDungeon Forge page controller. Runs inside the bundle; NS holds the modules. */
 (function () {
   const $ = id => document.getElementById(id);
   const presets = NS.DUNGEONS, IsoDungeon = NS.IsoDungeon, IsoNames = NS.IsoNames, IsoGraph = NS.IsoGraph, IsoForge = NS.IsoForge, used = new Set();
-  let state = null, svg = '', timer = 0, nameSalt = 0;
+  let state = null, lastGood = null, svg = '', notesSvg = '', timer = 0, nameSalt = 0;
   const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -4312,11 +4850,15 @@ root.IsoForge = { fit, forge, fromJSON, themeOf };
   restore('levels', 'iso-levels', v => ['', '3', '4', '5'].includes(v));
   restore('loops', 'iso-loops', v => ['', '1', '2', '3'].includes(v));
   restore('wloops', 'iso-wloops', v => ['', '0', '1', '2'].includes(v));
+  const deadEnds = () => (document.querySelector('input[name="deadends"]:checked') || {}).value || 'allow';
+  const setDeadEnds = v => { const r = document.querySelector(`input[name="deadends"][value="${v === 'none' ? 'none' : 'allow'}"]`); if (r) r.checked = true; };
+  { const v = store.get('iso-deadends'); if (v === 'allow' || v === 'none') setDeadEnds(v); }
+  restore('notesat', 'iso-notesat', v => ['near', 'right', 'page'].includes(v));
   restore('page', 'iso-page', v => !!IsoDungeon.PAGES[v]);
   const preset = () => presets[$('preset').value];
   const seed = () => Math.max(1, Math.floor(+$('seed').value || 1));
   const aspect = () => IsoDungeon.PAGES[$('page').value].aspect;
-  const settings = () => ({ type: preset().type, seed: seed(), levels: +$('levels').value || null, loops: +$('loops').value || null, levelLoops: $('wloops').value === '' ? null : +$('wloops').value, aspect: aspect(), title: $('dname').value.trim() });
+  const settings = () => ({ type: preset().type, seed: seed(), levels: +$('levels').value || null, loops: +$('loops').value || null, levelLoops: $('wloops').value === '' ? null : +$('wloops').value, deadEnds: deadEnds(), notes: $('notesat').value, aspect: aspect(), title: $('dname').value.trim() });
   function nameForMap() { $('dname').value = IsoNames.generate(preset().type, seed() + nameSalt * 7919, used); }
 
   function busy(msg) { document.body.classList.add('busy'); $('status').textContent = msg; }
@@ -4338,26 +4880,32 @@ root.IsoForge = { fit, forge, fromJSON, themeOf };
     busy('Checking the graph and fitting it to the page…');
     later(() => {
       const t0 = performance.now();
-      let r; try { r = IsoForge.fromJSON(g, { aspect: aspect() }); } catch (e) { r = { graph: g, v: IsoGraph.validate(g), plan: null, error: e.message, attempts: [] }; }
+      let r; try { r = IsoForge.fromJSON(g, { aspect: aspect(), notes: $('notesat').value }); } catch (e) { r = { graph: g, v: IsoGraph.validate(g), plan: null, error: e.message, attempts: [] }; }
       r.ms = performance.now() - t0; r.source = 'json';
-      if (!r.plan) { document.body.classList.remove('busy'); state = null; report(r); schematic(r.graph, r.v); $('status').textContent = r.v.ok ? 'The graph is sound but would not fit on the page: ' + (r.error || '') : 'The graph did not pass the checks; see the list below the map.'; return; }
+      if (!r.plan) { document.body.classList.remove('busy'); state = null; report(r); schematic(r.graph, r.v); setMatrixGraph(r.graph); $('mxstate').textContent = 'The edited graph could not be drawn (see the status line); the last map stays on screen.'; $('status').textContent = r.v.ok ? 'The graph is sound but would not fit on the page: ' + (r.error || '') : 'The graph did not pass the checks; see the list below the map.'; return; }
       const i = presets.findIndex(p => p.type === g.type); if (i >= 0) $('preset').value = i;
       if (Number.isInteger(g.seed)) $('seed').value = g.seed;
+      setDeadEnds(g.deadEnds);
       if (g.title) $('dname').value = g.title;
       state = r; draw();
     });
   }
-  function draw() {
+  function draw(keepEditor) {
     if (!state || !state.plan) return;
+    lastGood = state;
     const t0 = performance.now();
     let out;
-    try { out = IsoDungeon.renderGraph(state.plan, { theme: IsoForge.themeOf(state.graph.type), title: $('dname').value.trim() || 'Untitled Dungeon', aspect: aspect() }); }
+    try { out = IsoDungeon.renderGraph(state.plan, { theme: IsoForge.themeOf(state.graph.type), title: $('dname').value.trim() || 'Untitled Dungeon', aspect: aspect(), notes: $('notesat').value }); }
     catch (e) { document.body.classList.remove('busy'); $('status').textContent = 'Drawing failed: ' + e.message + '. Try another seed.'; console.error(e); return; }
-    svg = out.svg; state.out = out;
+    svg = out.svg; notesSvg = out.notesSvg || ''; state.out = out;
     out.resolved.title = $('dname').value.trim();
     $('sheet').innerHTML = svg;
-    $('json').value = JSON.stringify(out.resolved, null, 2);
-    report(state); schematic(state.graph, state.v, out.resolved);
+    $('notesheet').innerHTML = notesSvg; $('maptabs').hidden = !notesSvg;
+    showTab(notesSvg && $('tab-notes').getAttribute('aria-selected') === 'true' ? 'notes' : 'map');
+    if (!keepEditor) {
+      $('json').value = JSON.stringify(out.resolved, null, 2);
+      report(state); schematic(state.graph, state.v, out.resolved); setMatrixGraph(state.graph, out.resolved); $('mxstate').textContent = state.source === 'json' ? 'Map redrawn from the edited graph.' : '';
+    }
     document.body.classList.remove('busy');
     const st = state.v.stats;
     $('status').textContent = `${out.resolved.title || 'Untitled'} · ${preset().label} · seed ${state.graph.seed} · ${st.levels} levels, ${st.rooms} rooms, ${st.between} ${st.between === 1 ? 'loop' : 'loops'} between levels, ${st.within} within · fills ${Math.round(out.metrics.fill * 100)}% of the map area · ${(svg.length / 1048576).toFixed(1)} MB SVG · ${Math.round(state.ms + performance.now() - t0)} ms`;
@@ -4367,18 +4915,31 @@ root.IsoForge = { fit, forge, fromJSON, themeOf };
   const hidName = c => { const s = ['drop', 'chute', 'well', 'secret', 'lift', 'chimney', 'crawl', 'incline', 'channel', 'falls', 'scree', 'station'].map(k => c.design.segs.find(x => x.label && x.kind === k)).find(Boolean); return s ? s.label : TPL[c.design.tpl] || c.design.tpl; };
   /* --- validator report -------------------------------------------------- */
   function report(r) {
-    const rows = r.v.checks.map(c => ({ ok: c.ok ? 'ok' : 'bad', label: c.label, detail: c.detail }));
+    const rows = r.v.checks.map(c => ({ ok: c.ok ? 'ok' : c.soft ? 'warn' : 'bad', label: c.label, detail: c.detail }));
     if (r.v.ok) {
       if (r.plan) {
         const m = (r.out && r.out.metrics) || r.plan.metrics, tgt = r.target ?? IsoDungeon.FILL_TARGET;
         rows.push({ ok: 'ok', label: 'Placement', detail: `every level hung from a real connector with no overlaps (placement ${r.plan.salt + 1})` });
-        { const b = r.plan.metrics.built, n = r.plan.metrics.loops, kinds = r.plan.conns.filter(c => c.loop).map(c => `${c.tag}: ${hidName(c)}${c.design.barred ? ', barred' : ''}`).join('; '); rows.push({ ok: b === n ? 'ok' : 'warn', label: 'Loop ways built', detail: `${b} of ${n}${kinds ? ' (' + kinds + ')' : ''}${b < n ? '; the rest are drawn as hidden ways' : ''}` }); }
+        { const b = r.plan.metrics.built, n = r.plan.metrics.loops, kinds = r.plan.conns.filter(c => c.loop).map(c => `${c.tag}: ${hidName(c)}${c.design.barred ? ', barred' : ''}`).join('; '); rows.push({ ok: b === n ? 'ok' : 'warn', label: 'Loop ways built', detail: `${b} of ${n}${kinds ? ' (' + kinds + ')' : ''}${b < n ? `; ${r.plan.metrics.unbuilt.join(', ')} had no room on this page and ${n - b === 1 ? 'is' : 'are'} left off the map (join ${n - b === 1 ? 'it' : 'them'} to nearer levels, or try another page shape)` : ''}` }); }
         { const L = r.plan.conns.filter(c => c.loop), k = L.filter(c => !c.design.roleMiss); rows.push({ ok: k.length === L.length ? 'ok' : 'warn', label: 'Loop roles kept', detail: `${k.length} of ${L.length}${L.length ? ' (' + L.map(c => `${c.tag} ${RW[c.role] || c.role}${c.design.roleMiss ? ' — built as an open route instead' : ''}`).join('; ') + ')' : ''}` }); }
         rows.push({ ok: 'ok', label: 'Redundancy', detail: 'each second link between two levels arrives at least two passages from the first, unless it is hidden, barred or one-way' });
         { const longest = Math.max(0, ...r.plan.conns.flatMap(c => c.design.segs.filter(x => x.kind === 'shaft' || x.kind === 'ladder').map(x => Math.min(2.8, (x.d || 0) / Math.max(1, Math.ceil((x.d || 0) / 2.8 - 0.05)))))); rows.push({ ok: 'ok', label: 'Ladders', detail: `no single ladder longer than ${longest.toFixed(1)} units (about ${Math.round(longest * 5)} ft); taller drops are staged on ledges, or taken by spirals, switchbacks and lifts` }); }
+        { const gc = IsoDungeon.groundCheck(r.plan), nd = gc.doors[0] + gc.doors[1] + gc.doors[2];
+          rows.push({ ok: gc.lost.length ? 'warn' : 'ok', label: 'On foot', detail: gc.lost.length ? gc.lost.map(x => `${x.n} ${x.n === 1 ? 'room' : 'rooms'} on Level ${x.level} cannot be reached without climbing`).join('; ') : 'every room can be walked to: level floors, or stairs wherever the height changes' });
+          rows.push({ ok: gc.hidden.length ? 'warn' : 'ok', label: 'Doorways in view', detail: gc.hidden.length ? `the way to ${gc.hidden.join(', ')} is hidden behind higher ground` : `all ${nd} arrivals can be seen from the connector${gc.doors[1] ? ` (${gc.doors[1]} with the walls in front cut down to stubs)` : ''}` }); }
         rows.push({ ok: m.fill >= tgt ? 'ok' : 'warn', label: 'Page fill', detail: `${Math.round(m.fill * 100)}% of the map area carries drawing (target ${Math.round(tgt * 100)}%): the drawing covers ${Math.round(m.coverage * 100)}% of the page’s map area, and ${Math.round(m.density * 100)}% of that is inked` });
+        if (r.rerouted && r.rerouted.length) rows.push({ ok: 'ok', label: 'Loop ways rerouted', detail: r.rerouted.map(x => x.to ? `${x.id} moved from ${x.from} to ${x.to}` : `${x.id} (${x.from}) taken out, as the other loops already leave no dead end`).join('; ') + '; the page had no room for the first choice' });
+        if (r.dropped && r.dropped.length) rows.push({ ok: 'warn', label: 'Loop ways dropped', detail: `${r.dropped.join(', ')}: no room anywhere on this page` });
         if (r.source === 'generated') { const n = r.attempts.length, acc = r.attempts.filter(a => a.ok).length; rows.push({ ok: acc ? 'ok' : 'warn', label: 'Tries', detail: acc ? `graph variant ${r.graph.variant + 1} accepted after ${n} ${n === 1 ? 'try' : 'tries'}` : `no variant reached the target in ${n} tries; showing the fullest` }); }
       } else rows.push({ ok: 'bad', label: 'Placement', detail: r.error || 'no placement found' });
+    }
+    // once drawn, the ways down name their rooms, so dead ends can be found exactly
+    if (r.out && r.out.resolved) {
+      const g = r.out.resolved, de = IsoGraph.deadEnds(g), n = de.rooms.size, P = de.pockets.length, num = id => { const x = g.rooms.find(q => q.id === id); return x && x.number ? x.number : id; };
+      const list = de.pockets.map(p => 'rooms ' + p.map(num).join(', ')).join('; '), i = rows.findIndex(x => x.label === 'No dead ends' || x.label === 'Dead ends');
+      const row = g.deadEnds === 'none' ? { ok: n ? 'warn' : 'ok', label: 'No dead ends', detail: n ? `${P} ${P === 1 ? 'pocket hangs' : 'pockets hang'} off a single route as drawn: ${list}` : 'as drawn, block any one route and every room can still reach every other (one-way drops and barred shortcuts are not counted as ways out)' }
+        : { ok: 'ok', label: 'Dead ends', detail: n ? `allowed: ${n} ${n === 1 ? 'room' : 'rooms'} as drawn in ${P} ${P === 1 ? 'pocket' : 'pockets'} with one way in (${list})` : 'none as drawn' };
+      if (i >= 0) rows[i] = row; else rows.push(row);
     }
     const mark = { ok: '✓', warn: '!', bad: '✗' };
     $('checks').innerHTML = rows.map(c => `<li class="${c.ok}"><span class="mk" aria-hidden="true">${mark[c.ok]}</span><span><b>${esc(c.label)}</b> ${esc(c.detail)}</span></li>`).join('');
@@ -4416,45 +4977,170 @@ root.IsoForge = { fit, forge, fromJSON, themeOf };
     box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Schematic of the levels, ways down and loop ways"><defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--brass)"/></marker></defs>${s}${late}</svg>`;
   }
 
+  /* --- connection matrix (view and editing; graph edits live in NS.IsoMatrix) --- */
+  const IsoMatrix = NS.IsoMatrix;
+  let mgraph = null, mresolved = null, mTimer = 0;
+  const GLYPH = { passage: '●', alternative: '○', dangerous: '!', shortcut: '»', 'oneway>': '→', 'oneway<': '←' };
+  const WORDS = { passage: 'passage', alternative: 'alternative route', dangerous: 'dangerous path', shortcut: 'shortcut (barred from the far side)', 'oneway>': 'one-way drop', 'oneway<': 'one-way drop' };
+  function setMatrixGraph(g, resolved) { mgraph = g ? JSON.parse(JSON.stringify(g)) : null; if (resolved !== undefined) mresolved = resolved; renderMatrix(); }
+  function renderMatrix() {
+    const box = $('matrix'), wbox = $('waymatrix');
+    if (!mgraph || !Array.isArray(mgraph.rooms) || !Array.isArray(mgraph.levels) || !Array.isArray(mgraph.edges)) { box.innerHTML = '<p class="muted" style="padding:8px">No graph yet.</p>'; wbox.innerHTML = ''; return; }
+    let rooms, levels;
+    try { rooms = IsoMatrix.roomsInOrder(mgraph); levels = IsoMatrix.levelsInOrder(mgraph); } catch (e) { box.innerHTML = '<p class="muted" style="padding:8px">The graph is too broken to tabulate: ' + esc(e.message) + '</p>'; wbox.innerHTML = ''; return; }
+    const de = IsoMatrix.pockets(mgraph, mresolved), num = new Map(((mresolved && mresolved.rooms) || []).map(r => [r.id, r.number]));
+    const first = new Set(); let prev = null; for (const r of rooms) { if (r.level !== prev) first.add(r.id); prev = r.level; }
+    const lab = r => `${r.levelNo}·${r.k}`;
+    let h = '<table class="mx"><thead><tr><th class="corner">room</th>';
+    for (const c of rooms) h += `<th class="${first.has(c.id) ? 'lvl-edge' : ''}${de.rooms.has(c.id) ? ' dead' : ''}" title="${esc(c.id)}${num.get(c.id) ? ' · room ' + num.get(c.id) + ' on the map' : ''}">${esc(lab(c))}</th>`;
+    h += '</tr></thead><tbody>';
+    for (const r of rooms) {
+      const lvRooms = rooms.filter(x => x.level === r.level).length;
+      h += `<tr class="${first.has(r.id) ? 'lvl-top' : ''}"><th class="${de.rooms.has(r.id) ? 'dead' : ''}" title="${esc(r.id)} · ${esc(r.role || '')}${de.rooms.has(r.id) ? ' · in a dead-end pocket' : ''}">${esc(lab(r))}${num.get(r.id) ? ` <span class="muted">(${num.get(r.id)})</span>` : ''} <span class="muted">${esc(r.role || '')}</span>`;
+      if (first.has(r.id)) h += ` <button class="add" data-add="${esc(r.level)}" title="Add a room to Level ${r.levelNo}">+ room</button>`;
+      if (lvRooms > 2) h += `<button class="rm" data-rm="${esc(r.id)}" title="Remove room ${esc(lab(r))} and its links">×</button>`;
+      h += '</th>';
+      for (const c of rooms) {
+        const edge = first.has(c.id) ? ' lvl-edge' : '';
+        if (r.id === c.id) { h += `<td class="diag${edge}"></td>`; continue; }
+        const st = IsoMatrix.cellState(mgraph, r.id, c.id), same = r.level === c.level;
+        const key = st.kind === 'passage' ? 'passage' : st.kind === 'loop' ? st.state : '';
+        const cls = [same ? 'same' : '', key ? (key.startsWith('oneway') ? 'oneway' : key) : '', st.edge && st.edge.escape ? 'esc' : '', (de.rooms.has(r.id) && de.rooms.has(c.id) && key) ? 'dead' : ''].filter(Boolean).join(' ');
+        const tip = `${lab(r)} → ${lab(c)}: ${key ? WORDS[key] + (st.edge ? ' (' + st.edge.id + ')' : '') : same ? 'no passage' : 'no loop way'}. Click to change.`;
+        h += `<td class="${cls}${edge}"><button data-a="${esc(r.id)}" data-b="${esc(c.id)}" title="${esc(tip)}" aria-label="${esc(tip)}">${key ? GLYPH[key] : ''}</button></td>`;
+      }
+      h += '</tr>';
+    }
+    box.innerHTML = h + '</tbody></table>';
+    // ways down: rows lead down to columns
+    let w = '<table class="mx"><thead><tr><th class="corner">from \\ to</th>' + levels.map(l => `<th title="${esc(l.name)}">L${l.no}</th>`).join('') + '</tr></thead><tbody>';
+    for (const A of levels) {
+      w += `<tr><th title="${esc(A.name)}">L${A.no} <span class="muted">${esc(A.name)}</span></th>`;
+      for (const B of levels) {
+        if (A.id === B.id) { w += '<td class="diag"></td>'; continue; }
+        const e = mgraph.edges.find(x => x.kind === 'way' && x.from && x.to && x.from.level === A.id && x.to.level === B.id);
+        const tip = `Level ${A.no} → Level ${B.no}: ${e ? 'way down (' + e.id + ')' : 'no way down'}. Click to change.`;
+        w += `<td class="${e ? 'passage' : ''}"><button data-wa="${esc(A.id)}" data-wb="${esc(B.id)}" title="${esc(tip)}" aria-label="${esc(tip)}">${e ? '↓' : ''}</button></td>`;
+      }
+      w += '</tr>';
+    }
+    wbox.innerHTML = w + '</tbody></table>';
+  }
+  // one edit: update the matrix, schematic, checks and JSON now; redraw the map after a pause
+  function editGraph(next, what) {
+    if (!next || next === mgraph) return;
+    delete next.layout;   // the old placement may not suit the new graph; let the planner search again
+    mgraph = next;
+    const v = IsoGraph.validate(mgraph);
+    report({ graph: mgraph, v, plan: null }); schematic(mgraph, v);
+    $('json').value = JSON.stringify(mgraph, null, 2);
+    renderMatrix();
+    clearTimeout(mTimer);
+    if (!v.ok) { $('mxstate').textContent = `${what}. The graph does not pass the checks marked ✗, so the map is not redrawn yet.`; return; }
+    $('mxstate').textContent = `${what}. Redrawing the map…`;
+    const text = JSON.stringify(mgraph);
+    mTimer = setTimeout(() => fromJSON(text), 800);
+  }
+  function onMatrixClick(ev, back) {
+    const b = ev.target.closest('button'); if (!b || !mgraph) return;
+    if (b.dataset.a) { ev.preventDefault(); const r = IsoMatrix.cycleCell(mgraph, b.dataset.a, b.dataset.b, back ? -1 : 1), st = IsoMatrix.cellState(r, b.dataset.a, b.dataset.b); editGraph(r, `${b.dataset.a} – ${b.dataset.b}: ${st.kind === 'passage' ? 'passage' : st.kind === 'loop' ? WORDS[st.state] : 'no link'}`); }
+    else if (b.dataset.wa) { ev.preventDefault(); editGraph(IsoMatrix.toggleWay(mgraph, b.dataset.wa, b.dataset.wb), `way ${b.dataset.wa} → ${b.dataset.wb} changed`); }
+    else if (b.dataset.add) { ev.preventDefault(); editGraph(IsoMatrix.addRoom(mgraph, b.dataset.add), `room added to ${b.dataset.add}`); }
+    else if (b.dataset.rm) { ev.preventDefault(); editGraph(IsoMatrix.removeRoom(mgraph, b.dataset.rm), `room ${b.dataset.rm} removed`); }
+  }
+  for (const id of ['matrix', 'waymatrix']) {
+    $(id).addEventListener('click', ev => onMatrixClick(ev, ev.shiftKey));
+    $(id).addEventListener('contextmenu', ev => { if (ev.target.closest('button[data-a]')) onMatrixClick(ev, true); });
+  }
+  // typing in the JSON editor updates the matrix and schematic as soon as it parses
+  let jtyping = 0;
+  $('json').addEventListener('input', () => { clearTimeout(jtyping); jtyping = setTimeout(() => {
+    let g; try { g = JSON.parse($('json').value); } catch (e) { $('mxstate').textContent = 'The JSON does not parse yet; the matrix shows the last graph that did.'; return; }
+    if (!g || !Array.isArray(g.rooms)) return;
+    setMatrixGraph(g); try { const v = IsoGraph.validate(g); schematic(g, v); } catch (e) {}
+    $('mxstate').textContent = 'Matrix updated from the JSON. Press Draw this JSON to redraw the map.';
+  }, 400); });
+
   /* --- events ------------------------------------------------------------- */
   function newMap() { nameSalt = 0; nameForMap(); forge(); }
   $('seed').value = store.get('iso-seed') || preset().seed; nameForMap();
   $('preset').addEventListener('change', () => { store.set('iso-preset', $('preset').value); newMap(); });
   for (const [id, key] of [['levels', 'iso-levels'], ['loops', 'iso-loops'], ['wloops', 'iso-wloops'], ['page', 'iso-page']]) $(id).addEventListener('change', () => { store.set(key, $(id).value); forge(); });
   $('seed').addEventListener('change', () => { store.set('iso-seed', seed()); newMap(); });
+  for (const r of document.querySelectorAll('input[name="deadends"]')) r.addEventListener('change', () => { store.set('iso-deadends', deadEnds()); forge(); });
+  // where the notes go changes only the drawing, not the plan: redraw at once
+  $('notesat').addEventListener('change', () => { store.set('iso-notesat', $('notesat').value);
+    // after a graph that failed its checks, redraw the last map that worked (the JSON editor keeps the edits)
+    const keep = !state || !state.plan; if (keep) { if (!lastGood) return; state = lastGood; }
+    busy('Redrawing with the notes ' + ({ near: 'beside each level', right: 'on the right side', page: 'on a separate page' })[$('notesat').value] + '…'); later(() => draw(keep)); });
+  // Map / Notes tabs (the Notes tab appears only when the notes have their own page)
+  function showTab(which, focus) {
+    const notes = which === 'notes' && !$('maptabs').hidden;
+    $('tab-map').setAttribute('aria-selected', String(!notes)); $('tab-notes').setAttribute('aria-selected', String(notes));
+    $('tab-map').tabIndex = notes ? -1 : 0; $('tab-notes').tabIndex = notes ? 0 : -1;
+    $('sheet').hidden = notes; $('notesheet').hidden = !notes;
+    if (focus) (notes ? $('tab-notes') : $('tab-map')).focus();
+  }
+  $('tab-map').addEventListener('click', () => showTab('map'));
+  $('tab-notes').addEventListener('click', () => showTab('notes'));
+  $('maptabs').addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'End') { e.preventDefault(); const onNotes = $('tab-notes').getAttribute('aria-selected') === 'true'; showTab(e.key === 'Home' ? 'map' : e.key === 'End' ? 'notes' : onNotes ? 'map' : 'notes', true); } });
   $('reroll').addEventListener('click', () => { $('seed').value = 1 + Math.floor(Math.random() * 999998); store.set('iso-seed', seed()); newMap(); });
   $('newname').addEventListener('click', () => { nameSalt++; nameForMap(); later(draw); });
   let typing = 0;
   $('dname').addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => later(draw), 350); });
-  $('zoom').addEventListener('input', () => $('sheet').style.setProperty('--zoom', $('zoom').value));
+  $('zoom').addEventListener('input', () => { for (const id of ['sheet', 'notesheet']) $(id).style.setProperty('--zoom', $('zoom').value); });
   const copyText = (text, what) => {
     const done = () => { $('status').textContent = what + ' copied to the clipboard.'; };
     const fallback = () => { const ta = $('svgout'); ta.value = text; ta.select(); try { document.execCommand('copy'); done(); } catch (e) { $('status').textContent = 'Copying is blocked here. Select the text and copy it by hand.'; } };
     if (navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(fallback); else fallback();
   };
-  $('copy').addEventListener('click', () => copyText(svg, 'SVG'));
+  $('copy').addEventListener('click', () => { const notes = !$('notesheet').hidden && notesSvg; copyText(notes ? notesSvg : svg, notes ? 'Notes page SVG' : 'SVG'); });
   $('copyjson').addEventListener('click', () => copyText($('json').value, 'Graph JSON'));
-  $('drawjson').addEventListener('click', () => fromJSON($('json').value));
+  $('drawjson').addEventListener('click', () => { clearTimeout(jtyping); fromJSON($('json').value); });
   $('openjson').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { $('json').value = t; fromJSON(t); }); e.target.value = ''; });
   forge();
 })();
 
 /* The JSON reference fills the JSON card down to the bottom of the graph card;
-   whatever does not fit flows into a full-width card below, in two columns. */
+   whatever does not fit flows into the "continued" card under it.  If that card
+   would run past the bottom of the connection matrix beside it, it is cut off
+   there with a "Read more…" link that folds the rest open. */
 (function () {
   const doc = document.querySelector('.jdoc'), more = document.querySelector('.jmore'), cols = more && more.querySelector('.jcols');
-  if (!doc || !cols) return;
-  const cards = document.querySelectorAll('.graph > .card'), left = cards[0], right = cards[1];
+  const fold = document.getElementById('jfold'), link = document.getElementById('readmore');
+  if (!doc || !cols || !fold || !link) return;
+  const left = document.querySelector('.gleft > .card'), right = document.querySelector('.gright > .card');
+  const leftCol = document.querySelector('.gleft'), rightCol = document.querySelector('.gright');
+  let open = false;
+  function clip() {
+    fold.style.maxHeight = ''; fold.classList.remove('clipped'); link.hidden = true;
+    if (more.hidden || leftCol.getBoundingClientRect().top !== rightCol.getBoundingClientRect().top) return;   // stacked: show it all
+    const room = leftCol.getBoundingClientRect().bottom - fold.getBoundingClientRect().top - 40;   // 40: the link's line
+    const full = fold.scrollHeight;
+    if (full <= room + 40) return;   // it fits beside the matrix
+    link.hidden = false;
+    const shut = Math.max(160, room);
+    if (open) { fold.style.maxHeight = full + 'px'; link.textContent = 'Read less'; link.setAttribute('aria-expanded', 'true'); }
+    else { fold.style.maxHeight = shut + 'px'; fold.classList.add('clipped'); link.textContent = 'Read more…'; link.setAttribute('aria-expanded', 'false'); }
+  }
   function balance() {
     for (const s of [...cols.children]) doc.appendChild(s);
     more.hidden = true;
-    if (left.getBoundingClientRect().top !== right.getBoundingClientRect().top) return;   // stacked: keep it all together
-    const secs = [...doc.querySelectorAll(':scope > .jsec')];
-    while (secs.length > 1 && right.getBoundingClientRect().height > left.getBoundingClientRect().height + 24) { more.hidden = false; cols.prepend(secs.pop()); }
+    if (left.getBoundingClientRect().top === right.getBoundingClientRect().top) {   // side by side
+      const secs = [...doc.querySelectorAll(':scope > .jsec')];
+      while (secs.length > 1 && right.getBoundingClientRect().height > left.getBoundingClientRect().height + 24) { more.hidden = false; cols.prepend(secs.pop()); }
+    }
+    clip();
   }
+  link.addEventListener('click', ev => {
+    ev.preventDefault(); open = !open;
+    if (!open) { fold.style.maxHeight = fold.scrollHeight + 'px'; void fold.offsetHeight; }   // collapse from the open height so it animates
+    clip();
+    if (!open) more.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
   let t = 0; const later = () => { clearTimeout(t); t = setTimeout(balance, 60); };
   window.addEventListener('resize', later);
-  new MutationObserver(later).observe(document.getElementById('checks'), { childList: true });
+  for (const id of ['checks', 'matrix', 'waymatrix']) { const el = document.getElementById(id); if (el) new MutationObserver(later).observe(el, { childList: true }); }
   later();
 })();
 
